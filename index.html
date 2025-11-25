@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>South Florida Date Ranker</title>
+<title>South Florida Date Ranker (Fixed Images)</title>
 <style>
   :root {
     --bg-color: #121212;
     --panel-bg: #1e1e1e;
     --card-bg: #252525;
-    --accent: #ff4081; /* Hot pink for "Cutesy" */
-    --accent-blue: #448aff; /* Blue for History */
-    --accent-green: #00e676; /* Green for Healthy/Nature */
-    --accent-yellow: #ffeb3b; /* Yellow for Fun/Silly */
+    --accent: #ff4081; 
+    --accent-blue: #448aff; 
+    --accent-green: #00e676; 
+    --accent-yellow: #ffeb3b;
     --text-main: #e0e0e0;
     --text-muted: #a0a0a0;
   }
@@ -106,13 +106,11 @@
     text-shadow: 1px 1px 0px rgba(255,255,255,0.2);
   }
 
-  /* Rank Colors */
   .s-tier { background: #ff7f7f; }
   .a-tier { background: #ffbf7f; }
   .b-tier { background: #ffdf7f; }
   .c-tier { background: #ffff7f; }
   .d-tier { background: #bfff7f; }
-  /* No F Tier based on your screenshot preference */
 
   .dropzone {
     flex-grow: 1;
@@ -287,14 +285,6 @@
   .drive-med { color: #ff9800; }   /* 30-60 mins */
   .drive-long { color: #f44336; }  /* 60+ mins */
 
-  /* Loading State */
-  #loading-msg {
-    text-align: center;
-    color: var(--accent);
-    padding: 20px;
-    display: none;
-  }
-
 </style>
 </head>
 <body>
@@ -320,13 +310,15 @@
 
   <div class="pool-section">
     <h3 class="pool-title">👇 Unranked Dates 👇</h3>
-    <div id="loading-msg">Loading Dates...</div>
     <div class="dropzone pool-grid" id="pool"></div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- DATE DATA (Images sourced from Unsplash) ---
+        
+        // Helper function to proxy images so they don't break
+        const getProxyUrl = (url) => `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=400&h=200&fit=cover`;
+
         const dates = [
         {
             id: 'vizcaya',
@@ -335,7 +327,7 @@
             price: '$$',
             time: '45 min',
             tags: ['history', 'art'],
-            img: 'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=400&q=80'
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/8/87/Vizcaya_Museum_and_Gardens_-_panoramio.jpg')
         },
         {
             id: 'morikami',
@@ -344,7 +336,7 @@
             price: '$$',
             time: '50 min',
             tags: ['history', 'art'],
-            img: 'https://images.unsplash.com/photo-1578909196400-59f8f8156a05?auto=format&fit=crop&w=400&q=80'
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/c/c3/Morikami_Gardens_03.jpg')
         },
         {
             id: 'coralcastle',
@@ -353,7 +345,7 @@
             price: '$$',
             time: '55 min',
             tags: ['history', 'fun'],
-            img: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=400&q=80'
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/3/30/Coral_castle_gate.jpg')
         },
         {
             id: 'butterfly',
@@ -362,7 +354,7 @@
             price: '$$',
             time: '35 min',
             tags: ['art', 'fun'],
-            img: 'https://images.unsplash.com/photo-1534278931827-8a259344abe7?auto=format&fit=crop&w=400&q=80'
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/6/6f/Butterfly_World_Entrance.JPG')
         },
         {
             id: 'silverball',
@@ -371,7 +363,8 @@
             price: '$',
             time: '50 min',
             tags: ['fun', 'history'],
-            img: 'https://images.unsplash.com/photo-1511882150382-421056ac8d89?auto=format&fit=crop&w=400&q=80'
+            // Pinball machine
+            img: getProxyUrl('https://images.unsplash.com/photo-1595589886369-122e4c251411') 
         },
         {
             id: 'ygm',
@@ -380,7 +373,8 @@
             price: '$',
             time: '15 min',
             tags: ['food', 'fun'],
-            img: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=400&q=80'
+            // Farmers market stall
+            img: getProxyUrl('https://images.unsplash.com/photo-1488459716781-31db52582fe9')
         },
         {
             id: 'redlander',
@@ -389,7 +383,8 @@
             price: '$$$',
             time: '60 min',
             tags: ['food', 'fun'],
-            img: 'https://images.unsplash.com/photo-1466978913421-dad938661248?auto=format&fit=crop&w=400&q=80'
+            // Vineyard dining
+            img: getProxyUrl('https://images.unsplash.com/photo-1560612623-b6c86d8b693e')
         },
         {
             id: 'superblue',
@@ -398,7 +393,8 @@
             price: '$$$',
             time: '30 min',
             tags: ['art', 'fun'],
-            img: 'https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?auto=format&fit=crop&w=400&q=80'
+            // Abstract light art
+            img: getProxyUrl('https://images.unsplash.com/photo-1563089145-599997674d42')
         },
         {
             id: 'typark',
@@ -407,7 +403,8 @@
             price: '$',
             time: '12 min',
             tags: ['fun', 'food'],
-            img: 'https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?auto=format&fit=crop&w=400&q=80'
+            // Lake park
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/1/1d/Topeekeegee_Yugnee_Park_Sign.jpg')
         },
         {
             id: 'catcafe',
@@ -416,7 +413,8 @@
             price: '$',
             time: '30 min',
             tags: ['art', 'fun'],
-            img: 'https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=400&q=80'
+            // Kitten
+            img: getProxyUrl('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba')
         },
         {
             id: 'bonnet',
@@ -425,7 +423,7 @@
             price: '$$',
             time: '35 min',
             tags: ['history', 'art'],
-            img: 'https://images.unsplash.com/photo-1592345279419-959d784e8aad?auto=format&fit=crop&w=400&q=80'
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/2/23/Bonnet_House.jpg')
         },
         {
             id: 'madarts',
@@ -434,7 +432,8 @@
             price: '$$',
             time: '20 min',
             tags: ['art', 'fun'],
-            img: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=400&q=80'
+            // Neon art
+            img: getProxyUrl('https://images.unsplash.com/photo-1550684848-fac1c5b4e853')
         },
         {
             id: 'frost',
@@ -443,7 +442,8 @@
             price: '$$$',
             time: '35 min',
             tags: ['fun', 'history'],
-            img: 'https://images.unsplash.com/photo-1534067783865-6101211a0bad?auto=format&fit=crop&w=400&q=80'
+            // Aquarium/Jellyfish
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/0/07/Frost_Museum_of_Science.jpg')
         },
         {
             id: 'robert',
@@ -452,7 +452,7 @@
             price: '$',
             time: '60 min',
             tags: ['food', 'fun'],
-            img: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=400&q=80'
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/c/c5/Robert_is_Here.jpg')
         },
         {
             id: 'knaus',
@@ -461,7 +461,8 @@
             price: '$',
             time: '55 min',
             tags: ['food', 'fun'],
-            img: 'https://images.unsplash.com/photo-1519633858712-429ae553634e?auto=format&fit=crop&w=400&q=80'
+            // Cinnamon rolls
+            img: getProxyUrl('https://images.unsplash.com/photo-1509365465985-25d11c17e812')
         },
         {
             id: 'venetian',
@@ -470,7 +471,7 @@
             price: '$$',
             time: '40 min',
             tags: ['history', 'fun'],
-            img: 'https://images.unsplash.com/photo-1516239482977-c55067245ac0?auto=format&fit=crop&w=400&q=80'
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/7/77/Venetian_Pool.jpg')
         },
         {
             id: 'lioncountry',
@@ -479,7 +480,7 @@
             price: '$$$',
             time: '65 min',
             tags: ['fun'],
-            img: 'https://images.unsplash.com/photo-1534161308652-f87173e8770b?auto=format&fit=crop&w=400&q=80'
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/f/f8/Lion_Country_Safari.jpg')
         },
         {
             id: 'puttshack',
@@ -488,7 +489,8 @@
             price: '$$',
             time: '30-60 min',
             tags: ['fun'],
-            img: 'https://images.unsplash.com/photo-1592919505780-30395071d480?auto=format&fit=crop&w=400&q=80'
+            // Mini golf
+            img: getProxyUrl('https://images.unsplash.com/photo-1592919505780-30395071d480')
         },
         {
             id: 'oleta',
@@ -497,7 +499,7 @@
             price: '$',
             time: '25 min',
             tags: ['fun', 'food'],
-            img: 'https://images.unsplash.com/photo-1544551763-46a8723ba3f9?auto=format&fit=crop&w=400&q=80'
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/e/e4/Oleta_River_State_Park.jpg')
         },
         {
             id: 'tearoom',
@@ -506,7 +508,8 @@
             price: '$$',
             time: '55 min',
             tags: ['history', 'food'],
-            img: 'https://images.unsplash.com/photo-1555567946-b07c817c1c8f?auto=format&fit=crop&w=400&q=80'
+            // Tea set
+            img: getProxyUrl('https://images.unsplash.com/photo-1555567946-b07c817c1c8f')
         },
         {
             id: 'soundscape',
@@ -515,7 +518,7 @@
             price: '$',
             time: '40 min',
             tags: ['art', 'fun'],
-            img: 'https://images.unsplash.com/photo-1513106580091-1d82408b8cd8?auto=format&fit=crop&w=400&q=80'
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/a/a3/New_World_Center_Park.jpg')
         },
         {
             id: 'betterthansex',
@@ -524,7 +527,8 @@
             price: '$$',
             time: '40 min',
             tags: ['food', 'art'],
-            img: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=400&q=80'
+            // Chocolate dessert
+            img: getProxyUrl('https://images.unsplash.com/photo-1551024601-569d6f455e95')
         },
         {
             id: 'wynwood',
@@ -533,7 +537,7 @@
             price: '$',
             time: '25 min',
             tags: ['art', 'fun'],
-            img: 'https://images.unsplash.com/photo-1582559934353-2e47148e7276?auto=format&fit=crop&w=400&q=80'
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/3/3e/Wynwood_Walls.jpg')
         },
         {
             id: 'gumbolimbo',
@@ -542,7 +546,8 @@
             price: '$',
             time: '45 min',
             tags: ['fun', 'history'],
-            img: 'https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=400&q=80'
+            // Sea turtle
+            img: getProxyUrl('https://upload.wikimedia.org/wikipedia/commons/9/9e/Sea_turtle.jpg')
         },
         {
             id: 'nakedfarmer',
@@ -551,7 +556,8 @@
             price: '$',
             time: '30 min',
             tags: ['food'],
-            img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80'
+            // Roasted veggies
+            img: getProxyUrl('https://images.unsplash.com/photo-1512621776951-a57141f2eefd')
         }
         ];
 
@@ -615,17 +621,11 @@
         });
         }
 
-        // Populate Cards
-        try {
-            dates.forEach(d => {
-                pool.appendChild(createCard(d));
-            });
-        } catch(e) {
-            console.error("Error creating cards:", e);
-            document.getElementById('pool').innerHTML = "<p style='color:red; width:100%; text-align:center'>Error loading dates. Check console.</p>";
-        }
+        dates.forEach(d => {
+            pool.appendChild(createCard(d));
+        });
 
-        // Filter Logic Global Access
+        // Filter Logic
         window.filterCards = function(type) {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         event.target.classList.add('active');
