@@ -317,8 +317,12 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
         
-        // These are manually curated STABLE Unsplash images that match the "Vibe"
-        // This prevents the "broken image" error permanently.
+        // =========================================================================
+        //  DATA SOURCE
+        //  Images use Wikimedia Commons (Stable) or Unsplash Asset IDs (Stable).
+        //  To add more: Search Wikimedia Commons -> Copy Image Address -> Paste here.
+        // =========================================================================
+        
         const dates = [
         {
             id: 'vizcaya',
@@ -327,7 +331,7 @@
             price: '$$',
             time: '45 min',
             tags: ['history', 'art'],
-            img: 'https://images.unsplash.com/photo-1535498730771-e735b998cd64?auto=format&fit=crop&w=400&q=80' // Italian Villa
+            img: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Vizcaya_Museum_and_Gardens_-_panoramio.jpg'
         },
         {
             id: 'morikami',
@@ -336,7 +340,7 @@
             price: '$$',
             time: '50 min',
             tags: ['history', 'art'],
-            img: 'https://images.unsplash.com/photo-1580452932314-b8168285fb7c?auto=format&fit=crop&w=400&q=80' // Japanese Garden
+            img: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Morikami_Gardens_03.jpg'
         },
         {
             id: 'coralcastle',
@@ -345,7 +349,7 @@
             price: '$$',
             time: '55 min',
             tags: ['history', 'fun'],
-            img: 'https://images.unsplash.com/photo-1599661046827-d10ce3058a5c?auto=format&fit=crop&w=400&q=80' // Stone structure / Rock
+            img: 'https://upload.wikimedia.org/wikipedia/commons/3/30/Coral_castle_gate.jpg'
         },
         {
             id: 'butterfly',
@@ -354,7 +358,7 @@
             price: '$$',
             time: '35 min',
             tags: ['art', 'fun'],
-            img: 'https://images.unsplash.com/photo-1475143336780-6927dfa60427?auto=format&fit=crop&w=400&q=80' // Butterfly
+            img: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Butterfly_World_Entrance.JPG'
         },
         {
             id: 'silverball',
@@ -363,7 +367,8 @@
             price: '$',
             time: '50 min',
             tags: ['fun', 'history'],
-            img: 'https://images.unsplash.com/photo-1580638510803-b097b6794692?auto=format&fit=crop&w=400&q=80' // Pinball Neon
+            // Unsplash Pinball
+            img: 'https://images.unsplash.com/photo-1580638510803-b097b6794692?auto=format&fit=crop&w=400&q=80'
         },
         {
             id: 'ygm',
@@ -372,7 +377,8 @@
             price: '$',
             time: '15 min',
             tags: ['food', 'fun'],
-            img: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=400&q=80' // Market Aisle
+            // Unsplash Market
+            img: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=400&q=80' 
         },
         {
             id: 'redlander',
@@ -381,7 +387,8 @@
             price: '$$$',
             time: '60 min',
             tags: ['food', 'fun'],
-            img: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=400&q=80' // Outdoor Vineyard Dining
+            // Unsplash Winery
+            img: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=400&q=80'
         },
         {
             id: 'superblue',
@@ -390,7 +397,8 @@
             price: '$$$',
             time: '30 min',
             tags: ['art', 'fun'],
-            img: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=400&q=80' // Abstract Neon Art
+            // Unsplash Light Art
+            img: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=400&q=80' 
         },
         {
             id: 'typark',
@@ -399,7 +407,8 @@
             price: '$',
             time: '12 min',
             tags: ['fun', 'food'],
-            img: 'https://images.unsplash.com/photo-1543503206-81c8c50cb84a?auto=format&fit=crop&w=400&q=80' // Lake Park
+            // Unsplash Park Lake (Stable)
+            img: 'https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?auto=format&fit=crop&w=400&q=80'
         },
         {
             id: 'catcafe',
@@ -408,7 +417,8 @@
             price: '$',
             time: '30 min',
             tags: ['art', 'fun'],
-            img: 'https://images.unsplash.com/photo-1519052537078-e6302a4968d4?auto=format&fit=crop&w=400&q=80' // Cat and Coffee
+            // Unsplash Cat
+            img: 'https://images.unsplash.com/photo-1519052537078-e6302a4968d4?auto=format&fit=crop&w=400&q=80' 
         },
         {
             id: 'bonnet',
@@ -417,7 +427,7 @@
             price: '$$',
             time: '35 min',
             tags: ['history', 'art'],
-            img: 'https://images.unsplash.com/photo-1596541223130-5d31a73fb6c6?auto=format&fit=crop&w=400&q=80' // Tropical Estate
+            img: 'https://upload.wikimedia.org/wikipedia/commons/2/23/Bonnet_House.jpg'
         },
         {
             id: 'madarts',
@@ -426,7 +436,8 @@
             price: '$$',
             time: '20 min',
             tags: ['art', 'fun'],
-            img: 'https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=400&q=80' // Light Art
+            // Unsplash Neon
+            img: 'https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=400&q=80'
         },
         {
             id: 'frost',
@@ -435,7 +446,7 @@
             price: '$$$',
             time: '35 min',
             tags: ['fun', 'history'],
-            img: 'https://images.unsplash.com/photo-1534067783865-6101211a0bad?auto=format&fit=crop&w=400&q=80' // Aquarium
+            img: 'https://upload.wikimedia.org/wikipedia/commons/0/07/Frost_Museum_of_Science.jpg'
         },
         {
             id: 'robert',
@@ -444,7 +455,7 @@
             price: '$',
             time: '60 min',
             tags: ['food', 'fun'],
-            img: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=400&q=80' // Fruit Stand
+            img: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Robert_is_Here.jpg'
         },
         {
             id: 'knaus',
@@ -453,7 +464,8 @@
             price: '$',
             time: '55 min',
             tags: ['food', 'fun'],
-            img: 'https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&w=400&q=80' // Cinnamon Rolls
+            // Unsplash Cinnamon Rolls
+            img: 'https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&w=400&q=80'
         },
         {
             id: 'venetian',
@@ -462,7 +474,7 @@
             price: '$$',
             time: '40 min',
             tags: ['history', 'fun'],
-            img: 'https://images.unsplash.com/photo-1576016770548-19a706c9c38d?auto=format&fit=crop&w=400&q=80' // Pool and Palm trees
+            img: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Venetian_Pool.jpg'
         },
         {
             id: 'lioncountry',
@@ -471,7 +483,7 @@
             price: '$$$',
             time: '65 min',
             tags: ['fun'],
-            img: 'https://images.unsplash.com/photo-1547721064-da6cfb341d50?auto=format&fit=crop&w=400&q=80' // Giraffe
+            img: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/Lion_Country_Safari.jpg'
         },
         {
             id: 'puttshack',
@@ -480,7 +492,8 @@
             price: '$$',
             time: '30-60 min',
             tags: ['fun'],
-            img: 'https://images.unsplash.com/photo-1592919505780-30395071d480?auto=format&fit=crop&w=400&q=80' // Mini Golf
+            // Unsplash Mini Golf
+            img: 'https://images.unsplash.com/photo-1592919505780-30395071d480?auto=format&fit=crop&w=400&q=80'
         },
         {
             id: 'oleta',
@@ -489,7 +502,7 @@
             price: '$',
             time: '25 min',
             tags: ['fun', 'food'],
-            img: 'https://images.unsplash.com/photo-1544551763-46a8723ba3f9?auto=format&fit=crop&w=400&q=80' // Kayak
+            img: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Oleta_River_State_Park.jpg'
         },
         {
             id: 'tearoom',
@@ -498,7 +511,8 @@
             price: '$$',
             time: '55 min',
             tags: ['history', 'food'],
-            img: 'https://images.unsplash.com/photo-1555567946-b07c817c1c8f?auto=format&fit=crop&w=400&q=80' // Tea Set
+            // Unsplash Tea Set
+            img: 'https://images.unsplash.com/photo-1555567946-b07c817c1c8f?auto=format&fit=crop&w=400&q=80'
         },
         {
             id: 'soundscape',
@@ -507,7 +521,7 @@
             price: '$',
             time: '40 min',
             tags: ['art', 'fun'],
-            img: 'https://images.unsplash.com/photo-1513106580091-1d82408b8cd8?auto=format&fit=crop&w=400&q=80' // Movie in Park
+            img: 'https://upload.wikimedia.org/wikipedia/commons/a/a3/New_World_Center_Park.jpg'
         },
         {
             id: 'betterthansex',
@@ -516,7 +530,8 @@
             price: '$$',
             time: '40 min',
             tags: ['food', 'art'],
-            img: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=400&q=80' // Chocolate Dessert
+            // Unsplash Chocolate Cake
+            img: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=400&q=80'
         },
         {
             id: 'wynwood',
@@ -525,7 +540,7 @@
             price: '$',
             time: '25 min',
             tags: ['art', 'fun'],
-            img: 'https://images.unsplash.com/photo-1582559934353-2e47148e7276?auto=format&fit=crop&w=400&q=80' // Graffiti
+            img: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Wynwood_Walls.jpg'
         },
         {
             id: 'gumbolimbo',
@@ -534,7 +549,7 @@
             price: '$',
             time: '45 min',
             tags: ['fun', 'history'],
-            img: 'https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=400&q=80' // Sea Turtle
+            img: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Sea_turtle.jpg'
         },
         {
             id: 'nakedfarmer',
@@ -543,7 +558,18 @@
             price: '$',
             time: '30 min',
             tags: ['food'],
-            img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80' // Healthy Bowl
+            // Unsplash Healthy Food
+            img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80'
+        },
+        {
+            id: 'lasolas',
+            name: 'Las Olas Boulevard',
+            desc: 'Walk along the river, browse art galleries, and grab a coffee. Iconic Ft. Lauderdale spot.',
+            price: '$$',
+            time: '30 min',
+            tags: ['fun', 'art'],
+            // Unsplash Ft Lauderdale
+            img: 'https://images.unsplash.com/photo-1647463376772-5264b971a852?auto=format&fit=crop&w=400&q=80'
         }
         ];
 
