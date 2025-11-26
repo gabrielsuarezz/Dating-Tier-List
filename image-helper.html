@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Image Helper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .output {
+            background: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #4CAF50;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin-top: 15px;
+        }
+        .preview {
+            max-width: 300px;
+            border: 2px solid #ddd;
+            margin-top: 10px;
+        }
+        .tip {
+            background: #e7f3fe;
+            border-left: 4px solid #2196F3;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🖼️ Date Image Helper</h1>
+    <p>Easily add images to your date cards!</p>
+
+    <div class="section">
+        <h2>Quick Image URL Generator</h2>
+
+        <label for="dateId">Date ID:</label>
+        <select id="dateId">
+            <option value="">-- Select a date --</option>
+            <option value="vizcaya">Vizcaya Museum</option>
+            <option value="morikami">Morikami Gardens</option>
+            <option value="coralcastle">Coral Castle</option>
+            <option value="butterfly">Butterfly World</option>
+            <option value="silverball">Silverball Arcade</option>
+            <option value="ygm">Yellow Green Market</option>
+            <option value="redlander">The Redlander</option>
+            <option value="superblue">Superblue Miami</option>
+            <option value="typark">T.Y. Park</option>
+            <option value="catcafe">Good Luck Cat Cafe</option>
+            <option value="bonnet">Bonnet House</option>
+            <option value="madarts">Mad Arts</option>
+            <option value="frost">Frost Science</option>
+            <option value="robert">Robert Is Here</option>
+            <option value="knaus">Knaus Berry Farm</option>
+            <option value="venetian">Venetian Pool</option>
+            <option value="lioncountry">Lion Country Safari</option>
+            <option value="puttshack">Puttshack / PopStroke</option>
+            <option value="oleta">Oleta River Park</option>
+            <option value="tearoom">Cauley Sq Tea Room</option>
+            <option value="soundscape">SoundScape Park</option>
+            <option value="betterthansex">Better Than Sex</option>
+            <option value="wynwood">Wynwood Walls</option>
+            <option value="gumbolimbo">Gumbo Limbo Center</option>
+            <option value="nakedfarmer">Naked Farmer</option>
+            <option value="lasolas">Las Olas Boulevard</option>
+            <option value="musillusions">Museum of Illusions Miami</option>
+            <option value="paradox">Paradox Museum Miami</option>
+            <option value="pamm">Pérez Art Museum Miami</option>
+            <option value="rubell">Rubell Museum</option>
+            <option value="norton">Norton Museum of Art</option>
+            <option value="miyceramic">MIY Ceramics Studio</option>
+            <option value="splatterroom">Pinspiration Splatter Room</option>
+            <option value="candleland">Candle Land</option>
+            <option value="flamingo">Flamingo Gardens</option>
+            <option value="fairchild">Fairchild Tropical Garden</option>
+            <option value="miamibeachbotanical">Miami Beach Botanical Garden</option>
+            <option value="greenhat">The Green Hat Speakeasy</option>
+            <option value="room901">Room Nine01 (RM. 901)</option>
+            <option value="unitb">Unit B</option>
+            <option value="ifly">iFLY Indoor Skydiving</option>
+            <option value="glitchbar">Glitch Bar & Arcade</option>
+            <option value="tenthlevel">Tenth Level Tavern</option>
+            <option value="blackbird">Blackbird Ordinary</option>
+            <option value="escapology">Escapology Fort Lauderdale</option>
+            <option value="boxroom">Boxroom Escape Games</option>
+            <option value="chopshops">CHOPS + HOPS</option>
+            <option value="axeholehouse">The Axe Hole House</option>
+            <option value="skyzone">Sky Zone Trampoline Park</option>
+            <option value="urbanair">Urban Air Adventure Park</option>
+            <option value="justthefunny">Just The Funny Improv</option>
+            <option value="ftlimprov">Fort Lauderdale Improv</option>
+            <option value="miamiimprov">Miami Improv</option>
+            <option value="swapshop">Swap Shop Drive-In Theater</option>
+            <option value="happypaws">Happy Paws Cat Cafe</option>
+            <option value="doggiebag">Doggie Bag Cafe</option>
+            <option value="cafevico">Café Vico</option>
+            <option value="serafina">Trattoria Serafina</option>
+            <option value="ilmulino">Il Mulino New York</option>
+            <option value="bachour">Bachour</option>
+            <option value="dripndip">Drip n Dip</option>
+            <option value="lasolasgondola">Las Olas Gondola Ride</option>
+            <option value="nube">Nubé Rooftop Bar</option>
+            <option value="rooftop1wlo">Rooftop @1WLO</option>
+            <option value="miamifoodtours">Miami Food Tours</option>
+            <option value="italiancooking">Italian Cooking Class</option>
+            <option value="peachtree">Peachtree Revival Market</option>
+            <option value="animaledventures">Animal EDventures</option>
+            <option value="matheson">Matheson Hammock Beach</option>
+            <option value="hollywoodbeach">Hollywood Beach Broadwalk</option>
+        </select>
+
+        <label for="imageUrl">Image URL (or leave empty for placeholder):</label>
+        <input type="text" id="imageUrl" placeholder="https://example.com/image.jpg or images/date-name.jpg">
+
+        <div class="tip">
+            <strong>💡 Tip:</strong> To use a local image:
+            <ol>
+                <li>Save your image in the <code>images/</code> folder</li>
+                <li>Name it <code>{date-id}.jpg</code> (e.g., <code>vizcaya.jpg</code>)</li>
+                <li>Enter: <code>images/vizcaya.jpg</code> in the box above</li>
+            </ol>
+        </div>
+
+        <button onclick="generateCode()">Generate Code</button>
+
+        <div id="output" class="output" style="display: none;"></div>
+        <img id="preview" class="preview" style="display: none;" />
+    </div>
+
+    <div class="section">
+        <h2>Where to Find Images</h2>
+        <ul>
+            <li><strong>Take your own:</strong> Best option! Visit and photograph</li>
+            <li><strong>Google Images:</strong> Search "{location name}", right-click → Copy image address</li>
+            <li><strong>Venue websites:</strong> Official photos from their site</li>
+            <li><strong>Instagram:</strong> Search location tag</li>
+            <li><strong>Free stock photos:</strong>
+                <ul>
+                    <li><a href="https://www.pexels.com" target="_blank">Pexels</a></li>
+                    <li><a href="https://unsplash.com" target="_blank">Unsplash</a></li>
+                    <li><a href="https://pixabay.com" target="_blank">Pixabay</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        function generateCode() {
+            const dateId = document.getElementById('dateId').value;
+            const imageUrl = document.getElementById('imageUrl').value;
+            const output = document.getElementById('output');
+            const preview = document.getElementById('preview');
+
+            if (!dateId) {
+                alert('Please select a date!');
+                return;
+            }
+
+            let code;
+            if (imageUrl) {
+                code = `img: '${imageUrl}'`;
+
+                // Try to preview the image
+                preview.src = imageUrl;
+                preview.style.display = 'block';
+                preview.onerror = function() {
+                    preview.style.display = 'none';
+                };
+            } else {
+                code = `img: ''  // Will use category placeholder icon`;
+                preview.style.display = 'none';
+            }
+
+            output.textContent = `Find the date with id: '${dateId}' in index.html\nReplace its img line with:\n\n${code}`;
+            output.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

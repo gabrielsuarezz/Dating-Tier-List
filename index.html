@@ -286,6 +286,73 @@
   .drive-med { color: #ff9800; }   /* 30-60 mins */
   .drive-long { color: #f44336; }  /* 60+ mins */
 
+  /* --- TOOLTIP SYSTEM --- */
+  .card-tooltip {
+    position: absolute;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
+    color: var(--text-main);
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.1);
+    z-index: 10000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    min-width: 320px;
+    max-width: 400px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    transform: translateY(10px);
+    backdrop-filter: blur(10px);
+  }
+
+  .card-tooltip.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tooltip-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+  }
+
+  .tooltip-section {
+    margin: 10px 0;
+  }
+
+  .tooltip-label {
+    font-weight: 600;
+    color: var(--accent-blue);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .tooltip-content {
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .tooltip-price {
+    display: inline-block;
+    background: var(--accent-green);
+    color: #000;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .tooltip-hours {
+    color: var(--accent-yellow);
+    font-weight: 600;
+  }
+
 </style>
 </head>
 <body>
@@ -316,13 +383,39 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-        
+
         // =========================================================================
-        //  DATA SOURCE
-        //  Images use Wikimedia Commons (Stable) or Unsplash Asset IDs (Stable).
-        //  To add more: Search Wikimedia Commons -> Copy Image Address -> Paste here.
+        //  IMAGE FALLBACK SYSTEM
+        //  If a specific image fails to load, it will fall back to category defaults
         // =========================================================================
-        
+
+        // Simple colored placeholder fallbacks - these will always work
+        const FALLBACK_IMAGES = {
+            art: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ff4081" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="48" fill="white" text-anchor="middle" dy=".3em"%3E🎨%3C/text%3E%3C/svg%3E',
+            history: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23448aff" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="48" fill="white" text-anchor="middle" dy=".3em"%3E🏛️%3C/text%3E%3C/svg%3E',
+            fun: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ffeb3b" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="48" fill="black" text-anchor="middle" dy=".3em"%3E🎢%3C/text%3E%3C/svg%3E',
+            food: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%2300e676" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="48" fill="white" text-anchor="middle" dy=".3em"%3E🌿%3C/text%3E%3C/svg%3E',
+            default: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23666" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="24" fill="white" text-anchor="middle" dy=".3em"%3ENo Image%3C/text%3E%3C/svg%3E'
+        };
+
+        // =========================================================================
+        //  HOW TO ADD IMAGES - 3 METHODS:
+        //
+        //  METHOD 1 (EASIEST): Use local images
+        //    - Save image in the 'images' folder as '{id}.jpg' (e.g., 'vizcaya.jpg')
+        //    - Set img: 'images/vizcaya.jpg'
+        //
+        //  METHOD 2: Use external URLs
+        //    - Find image online (Wikimedia, venue website, etc.)
+        //    - Set img: 'https://...'
+        //
+        //  METHOD 3: Use placeholder
+        //    - Set img: '' (empty string)
+        //    - Will show colored category icon
+        //
+        //  The fallback system handles broken images automatically!
+        // =========================================================================
+
         const dates = [
         {
             id: 'vizcaya',
@@ -331,7 +424,13 @@
             price: '$$',
             time: '45 min',
             tags: ['history', 'art'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Vizcaya_Museum_and_Gardens_-_panoramio.jpg'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Villa_Vizcaya_20110228.jpg',
+            details: {
+                pricing: 'Adults: $25 | Students: $15 | Kids 6-12: $10 | Under 6: FREE',
+                hours: 'Wed-Mon: 9:30 AM - 4:30 PM | Closed Tuesdays',
+                whatToExpect: '34 furnished rooms in Mediterranean Revival estate, 10 acres of Italian Renaissance gardens, Biscayne Bay waterfront views. Plan 2-3 hours. Parking available ($5).',
+                notes: 'Military/Veterans get free admission year-round! Café on-site. Wedding photos common here.'
+            }
         },
         {
             id: 'morikami',
@@ -340,7 +439,13 @@
             price: '$$',
             time: '50 min',
             tags: ['history', 'art'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Morikami_Gardens_03.jpg'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/3/36/MorikamiLakeHouse.jpg',
+            details: {
+                pricing: 'Adults: $20 | Students/Military: $18 | Kids 6-17: $12 | Under 6: FREE',
+                hours: 'Tue-Sun: 10 AM - 5 PM | Closed Mondays & major holidays',
+                whatToExpect: '200 acres with 6 distinct Japanese gardens, museum, koi ponds, bonsai collection. Plan 2-3 hours. Cornell Café serves Japanese-inspired food.',
+                notes: 'Free admission first Sunday of each month! Very peaceful for couples. Wear comfortable walking shoes.'
+            }
         },
         {
             id: 'coralcastle',
@@ -349,7 +454,13 @@
             price: '$$',
             time: '55 min',
             tags: ['history', 'fun'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/3/30/Coral_castle_gate.jpg'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Coral_Castle_1.jpg/1200px-Coral_Castle_1.jpg',
+            details: {
+                pricing: 'Adults: $18 | Seniors 62+: $15 | Kids 7-12: $8 | Under 7: FREE',
+                hours: 'Daily: 8 AM - 6 PM (last admission 5 PM)',
+                whatToExpect: '1,100 tons of coral rock sculpted by Edward Leedskalnin. Self-guided tour of unusual sculptures, stone furniture, telescope. Plan 1-1.5 hours. Great for curious minds!',
+                notes: 'Built single-handedly 1923-1951. Story of unrequited love. Cash & cards accepted. Gift shop on-site.'
+            }
         },
         {
             id: 'butterfly',
@@ -358,7 +469,13 @@
             price: '$$',
             time: '35 min',
             tags: ['art', 'fun'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Butterfly_World_Entrance.JPG'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Morpho_peleides_at_Butterfly_World.jpg',
+            details: {
+                pricing: 'Adults: $32.95 | Seniors 55+: $27.95 | Kids 3-11: $24.95 | Under 3: FREE',
+                hours: 'Mon-Sat: 9 AM - 5 PM | Sun: 11 AM - 5 PM (last entry 4 PM)',
+                whatToExpect: '3 acres of screened aviaries with 20,000+ live butterflies, hummingbirds, lorikeets, flamingos. Plan 1.5-2 hours. Bring camera! Wear bright colors to attract butterflies.',
+                notes: 'World\'s largest butterfly park! Buy tickets online for discount. Can hand-feed lorikeets for extra fee.'
+            }
         },
         {
             id: 'silverball',
@@ -367,8 +484,13 @@
             price: '$',
             time: '50 min',
             tags: ['fun', 'history'],
-            // Unsplash Pinball
-            img: 'https://images.unsplash.com/photo-1580638510803-b097b6794692?auto=format&fit=crop&w=400&q=80'
+            img: 'https://silverballmuseum.com/delray-beach/wp-content/uploads/sites/5/2021/11/silverballmsr03449-2537.jpg',
+            details: {
+                pricing: 'Flat rate: $20/person for UNLIMITED play on all machines',
+                hours: 'Mon-Thu: 12-9 PM | Fri-Sat: 12-10 PM | Sun: 12-9 PM',
+                whatToExpect: '150+ vintage pinball & arcade games from 1950s-2000s. ALL on free play once you pay entry. Plan 2-3 hours. Competitive & nostalgic fun!',
+                notes: 'Perfect for competitive dates! Soda & snacks available. No outside food/drink. Re-entry allowed same day.'
+            }
         },
         {
             id: 'ygm',
@@ -377,8 +499,13 @@
             price: '$',
             time: '15 min',
             tags: ['food', 'fun'],
-            // Unsplash Market
-            img: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=400&q=80' 
+            img: 'https://voyagemia.com/wp-content/uploads/2017/10/personal_photo-238-1000x600.jpg',
+            details: {
+                pricing: 'FREE entry | Food $5-15 per item',
+                hours: 'Sat-Sun ONLY: 8 AM - 4 PM',
+                whatToExpect: 'Huge covered flea market with 500+ vendors. Fresh produce, international food, antiques, crafts. Plan 1-2 hours. Casual & lively atmosphere. Cash recommended.',
+                notes: 'Weekend-only! Great for breakfast dates. Try the açaí bowls and empanadas. Free parking.'
+            }
         },
         {
             id: 'redlander',
@@ -387,8 +514,13 @@
             price: '$$$',
             time: '60 min',
             tags: ['food', 'fun'],
-            // Unsplash Winery
-            img: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=400&q=80'
+            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fit,w_1440,h_900/crm/miamifl/RedLander-Restaurant-at-Schnebly-Winery-2-1440x9000-9381b7685056a36_9381b86e-5056-a36a-0b1c37f45551f690.jpg',
+            details: {
+                pricing: 'Entrees $18-38 | Wine flights $15-20 | Full bottles $25-60',
+                hours: 'Daily: 12-5 PM (Restaurant) | Winery tours available',
+                whatToExpect: 'Farm-to-fork cuisine at Schnebly Redland\'s Winery. Famous avocado-stuffed burgers, tropical fruit wines. Indoor/outdoor seating with vineyard views. Plan 1.5-2 hours.',
+                notes: 'Reservations recommended on weekends! Try the tropical wine tasting flight. Live music some weekends.'
+            }
         },
         {
             id: 'superblue',
@@ -397,8 +529,13 @@
             price: '$$$',
             time: '30 min',
             tags: ['art', 'fun'],
-            // Unsplash Light Art
-            img: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=400&q=80' 
+            img: 'https://cdn.prod.website-files.com/650ba1c41a78874c2e6faac3%2F66eaa4262cbacf5117c1fda5_bg%20video-poster-00001.jpg',
+            details: {
+                pricing: 'Adults: $39+ | Students/Seniors: $35+ | Kids 4-12: $25+ (varies by exhibition)',
+                hours: 'Wed-Sun: 10 AM - 6 PM | Closed Mon-Tue | Timed entry tickets',
+                whatToExpect: 'Massive immersive art installations you walk through. Digital waterfalls, infinity mirrors, cloud rooms. Very Instagram-worthy. Plan 1-1.5 hours. Book timed slots online.',
+                notes: 'MUST book tickets online in advance! Wear comfortable shoes. Bring phone for photos. Changing exhibitions every few months.'
+            }
         },
         {
             id: 'typark',
@@ -407,8 +544,13 @@
             price: '$',
             time: '12 min',
             tags: ['fun', 'food'],
-            // Unsplash Park Lake (Stable)
-            img: 'https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?auto=format&fit=crop&w=400&q=80'
+            img: 'https://static.where-e.com/United_States/Florida_State/Broward_County/Ty-Topeekeegee-Yugnee-Park_fc6c4dedfbc5b1407b8ac47c38f930e2.jpg',
+            details: {
+                pricing: 'FREE park entry | Paddle boats $15/30min | Bike rentals $10/hr',
+                hours: 'Daily: Sunrise to Sunset | Rentals: 10 AM - 5 PM',
+                whatToExpect: '138-acre park with lake, 2-mile paved walking loop, paddle boats, playground, picnic areas. Bring your own food or rent equipment. Casual outdoor date. Plan 1-2 hours.',
+                notes: 'Great budget date! Bring blanket for picnic. Weekends can be crowded with families. Free parking.'
+            }
         },
         {
             id: 'catcafe',
@@ -417,8 +559,13 @@
             price: '$',
             time: '30 min',
             tags: ['art', 'fun'],
-            // Unsplash Cat
-            img: 'https://images.unsplash.com/photo-1519052537078-e6302a4968d4?auto=format&fit=crop&w=400&q=80' 
+            img: 'https://fortlauderdalemagazine.com/wp-content/uploads/2018/05/0618_Community_1.jpg',
+            details: {
+                pricing: 'Cat lounge: $15/person (includes drink) | Thrift shop: FREE',
+                hours: 'Wed-Mon: 11 AM - 7 PM | Closed Tuesdays',
+                whatToExpect: 'Adoptable cats roam a thrift store. Pay to hang in cat lounge area with coffee/tea. All cats available for adoption. Quirky & heartwarming. Plan 1 hour.',
+                notes: 'Reservations recommended for cat lounge! Must be 10+ years old. Hand sanitizer provided. Great for animal lovers.'
+            }
         },
         {
             id: 'bonnet',
@@ -427,7 +574,13 @@
             price: '$$',
             time: '35 min',
             tags: ['history', 'art'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/2/23/Bonnet_House.jpg'
+            img: 'https://www.bonnethouse.org/wp-content/uploads/2017/02/BH-main2.jpg',
+            details: {
+                pricing: 'Adults: $25 | Seniors 65+: $23 | Students/Youth 6-18: $20 | Under 6: FREE',
+                hours: 'Tue-Sat: 9 AM - 4 PM | Sun: 11 AM - 4 PM | Closed Mondays',
+                whatToExpect: '1920s artist estate on 35 tropical acres. Wild squirrel monkeys, swans, turtles. Historic house tours, art gallery, waterfront. Plan 1.5-2 hours.',
+                notes: 'Look for the monkeys in the trees! Guided tours available. Beautiful for nature & history lovers. Free parking.'
+            }
         },
         {
             id: 'madarts',
@@ -436,8 +589,13 @@
             price: '$$',
             time: '20 min',
             tags: ['art', 'fun'],
-            // Unsplash Neon
-            img: 'https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=400&q=80'
+            img: 'https://media.timeout.com/images/106088136/image.jpg',
+            details: {
+                pricing: 'General admission: $29-35 | Students: $25 | Kids under 12: $20',
+                hours: 'Thu-Sun: 12-8 PM | Closed Mon-Wed | Timed entry tickets',
+                whatToExpect: 'Immersive digital art installations. Projection mapping, interactive light rooms, sound art. Instagram-worthy. Plan 45-60 minutes. Book online.',
+                notes: 'Smaller than Superblue but closer to Broward! Rotating exhibitions. Bring your camera. Arrive on time for your slot.'
+            }
         },
         {
             id: 'frost',
@@ -446,7 +604,13 @@
             price: '$$$',
             time: '35 min',
             tags: ['fun', 'history'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/0/07/Frost_Museum_of_Science.jpg'
+            img: 'https://www.frostscience.org/wp-content/uploads/2023/08/Oculus-ps-9-scaled.jpg',
+            details: {
+                pricing: 'Adults: $32 | Seniors/Students: $28 | Kids 3-11: $23 | Under 3: FREE | Laser shows extra $10',
+                hours: 'Daily: 9:30 AM - 5 PM | Laser Fridays: 8-11 PM',
+                whatToExpect: '3-level aquarium, planetarium shows, science exhibits. Laser shows on Friday nights with music. Plan 3-4 hours for full museum. Buy combo tickets.',
+                notes: 'Laser Fridays are 21+ after 6 PM! Book planetarium shows online. Parking is $25-30 nearby. Beautiful waterfront location.'
+            }
         },
         {
             id: 'robert',
@@ -455,7 +619,13 @@
             price: '$',
             time: '60 min',
             tags: ['food', 'fun'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Robert_is_Here.jpg'
+            img: 'https://cdn.shopify.com/s/files/1/1687/7223/files/Store-Front_10-1024x680_grande.jpg?v=1483305153',
+            details: {
+                pricing: 'FREE entry | Smoothies $8-12 | Fruit varies | Petting zoo FREE',
+                hours: 'Daily: 8 AM - 7 PM',
+                whatToExpect: 'Iconic Homestead fruit stand since 1959. Exotic tropical fruits, famous milkshakes & smoothies, free petting zoo. Casual & fun. Plan 1 hour.',
+                notes: 'Try the key lime milkshake! Cash recommended. Bring small bills for goat food. Great Instagram spot. Very kid-friendly.'
+            }
         },
         {
             id: 'knaus',
@@ -464,8 +634,13 @@
             price: '$',
             time: '55 min',
             tags: ['food', 'fun'],
-            // Unsplash Cinnamon Rolls
-            img: 'https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&w=400&q=80'
+            img: 'https://offloadmedia.feverup.com/secretmiami.com/wp-content/uploads/2025/08/22123606/Copy-of-Dicover-Photo-Collage-Miami-edited-12-1024x683.jpg',
+            details: {
+                pricing: 'Cinnamon rolls $13/6-pack | Strawberry shakes $8 | Produce varies',
+                hours: 'SEASONAL (Nov-Apr): Mon-Sat 8 AM - 5:30 PM | CLOSED May-Oct',
+                whatToExpect: 'Legendary cinnamon rolls from family farm. Expect 30-60 min wait on weekends. Also strawberry shakes, fresh produce. Plan 1-1.5 hours including line.',
+                notes: 'Go early (before 9 AM) to avoid lines! Cash only. CLOSED in summer. Worth the drive & wait. Get extras to freeze!'
+            }
         },
         {
             id: 'venetian',
@@ -474,7 +649,7 @@
             price: '$$',
             time: '40 min',
             tags: ['history', 'fun'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Venetian_Pool.jpg'
+            img: 'https://www.coralgables.com/sites/default/files/styles/internal_banner_mobile/public/2022-04/venetian-pool7.jpg?itok=SDCqKeed'
         },
         {
             id: 'lioncountry',
@@ -483,7 +658,7 @@
             price: '$$$',
             time: '65 min',
             tags: ['fun'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/Lion_Country_Safari.jpg'
+            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/crm/visitflorida/50239_ykt0ct8138xlxs66kk384vjq1vgt4r2u_965181ae-5056-a36a-0bcf1b8120f6041f.jpg'
         },
         {
             id: 'puttshack',
@@ -492,8 +667,7 @@
             price: '$$',
             time: '30-60 min',
             tags: ['fun'],
-            // Unsplash Mini Golf
-            img: 'https://images.unsplash.com/photo-1592919505780-30395071d480?auto=format&fit=crop&w=400&q=80'
+            img: 'https://platform.miami.eater.com/wp-content/uploads/sites/12/chorus/uploads/chorus_asset/file/24133408/IMG_0648.JPG?quality=90&strip=all&crop=16.654761904762,0,66.690476190476,100'
         },
         {
             id: 'oleta',
@@ -502,7 +676,7 @@
             price: '$',
             time: '25 min',
             tags: ['fun', 'food'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Oleta_River_State_Park.jpg'
+            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fit,w_1440,h_900/crm/miamifl/110491_5406_576b7d01-5056-a36a-0bd06519340e8a63.jpg'
         },
         {
             id: 'tearoom',
@@ -511,8 +685,7 @@
             price: '$$',
             time: '55 min',
             tags: ['history', 'food'],
-            // Unsplash Tea Set
-            img: 'https://images.unsplash.com/photo-1555567946-b07c817c1c8f?auto=format&fit=crop&w=400&q=80'
+            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/4c/a2/0c/the-wicker-room.jpg?w=900&h=500&s=1'
         },
         {
             id: 'soundscape',
@@ -521,7 +694,7 @@
             price: '$',
             time: '40 min',
             tags: ['art', 'fun'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/a/a3/New_World_Center_Park.jpg'
+            img: 'https://www.miamibeachfl.gov/wp-content/uploads/2024/02/Parks-Gallery-1-MiamiBeachSoundstage.jpeg'
         },
         {
             id: 'betterthansex',
@@ -530,8 +703,7 @@
             price: '$$',
             time: '40 min',
             tags: ['food', 'art'],
-            // Unsplash Chocolate Cake
-            img: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=400&q=80'
+            img: 'https://images.getbento.com/accounts/73b409766e10013f613f866793e5091e/media/images/5462PXL_20231110_011912105.LONG_EXPOSURE-01.COVER.jpg?w=1200&fit=crop&auto=compress,format&cs=origin&h=600'
         },
         {
             id: 'wynwood',
@@ -540,7 +712,7 @@
             price: '$',
             time: '25 min',
             tags: ['art', 'fun'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Wynwood_Walls.jpg'
+            img: 'https://thewynwoodwalls.com/wp-content/uploads/2023/12/NK-231203-WW-3832-copy-2-2048x1364.jpg'
         },
         {
             id: 'gumbolimbo',
@@ -549,7 +721,7 @@
             price: '$',
             time: '45 min',
             tags: ['fun', 'history'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Sea_turtle.jpg'
+            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/77/8c/d4/gumbo-limbo-nature-center.jpg?w=900&h=500&s=1'
         },
         {
             id: 'nakedfarmer',
@@ -558,8 +730,7 @@
             price: '$',
             time: '30 min',
             tags: ['food'],
-            // Unsplash Healthy Food
-            img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80'
+            img: 'https://images.squarespace-cdn.com/content/v1/61dece231a26677d49b63188/1665776582704-Z9LFQXC4VB5DLP8QRIY6/Naked+Farmer+Coral+Gables+137+Giralda+Ave+4.jpg'
         },
         {
             id: 'lasolas',
@@ -568,10 +739,410 @@
             price: '$$',
             time: '30 min',
             tags: ['fun', 'art'],
-            // Unsplash Ft Lauderdale
-            img: 'https://images.unsplash.com/photo-1647463376772-5264b971a852?auto=format&fit=crop&w=400&q=80'
+            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/crm/ftlauderdale/11324281495_dfa0982014_b0-9279d1d25056b3a_9279d401-5056-b3a8-4921dc0d91c6c904.jpg'
+        },
+        {
+            id: 'musillusions',
+            name: 'Museum of Illusions Miami',
+            desc: 'Interactive optical illusions and mind-bending photo ops. Super fun for couples!',
+            price: '$$',
+            time: '35 min',
+            tags: ['art', 'fun'],
+            img: ''
+        },
+        {
+            id: 'paradox',
+            name: 'Paradox Museum Miami',
+            desc: 'Over 70 paradox-based exhibits. Brain-teasing fun in Wynwood.',
+            price: '$$',
+            time: '30 min',
+            tags: ['art', 'fun'],
+            img: 'https://paradoxmuseum.com/_astro/gallery2_cur62w_Zjlov5.png'
+        },
+        {
+            id: 'pamm',
+            name: 'Pérez Art Museum Miami',
+            desc: 'Modern art on the waterfront. Beautiful building with bay views and world-class exhibits.',
+            price: '$$',
+            time: '35 min',
+            tags: ['art', 'history'],
+            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/31/8b/0e/caption.jpg?w=900&h=-1&s=1'
+        },
+        {
+            id: 'rubell',
+            name: 'Rubell Museum',
+            desc: 'Contemporary art in a massive warehouse. Cutting-edge exhibits and unique space.',
+            price: '$$',
+            time: '30 min',
+            tags: ['art'],
+            img: ''
+        },
+        {
+            id: 'norton',
+            name: 'Norton Museum of Art',
+            desc: 'World-class collection with gorgeous gardens. Worth the drive to West Palm Beach.',
+            price: '$$',
+            time: '65 min',
+            tags: ['art', 'history'],
+            img: 'https://www.norton.org/storage/app/media/Home/Splash%20mobile%20Norton%20image.jpg'
+        },
+        {
+            id: 'miyceramic',
+            name: 'MIY Ceramics Studio',
+            desc: 'Paint your own pottery together. Take home a custom mug or bowl you made as a couple!',
+            price: '$$',
+            time: '25 min',
+            tags: ['art', 'fun'],
+            img: ''
+        },
+        {
+            id: 'splatterroom',
+            name: 'Pinspiration Splatter Room',
+            desc: 'Throw paint at each other in a private room. Messy, colorful, and hilarious!',
+            price: '$$',
+            time: '20 min',
+            tags: ['art', 'fun'],
+            img: ''
+        },
+        {
+            id: 'candleland',
+            name: 'Candle Land',
+            desc: 'Make custom scented candles together. Choose your scents and containers.',
+            price: '$$',
+            time: '25 min',
+            tags: ['art', 'fun'],
+            img: ''
+        },
+        {
+            id: 'flamingo',
+            name: 'Flamingo Gardens',
+            desc: 'Botanical gardens + wildlife sanctuary in Davie. See flamingos, peacocks, and Florida wildlife!',
+            price: '$$',
+            time: '20 min',
+            tags: ['history', 'fun'],
+            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/crm/ftlauderdale/flamingo-gardens-las-vegas0-0280158e5056b3a_028017eb-5056-b3a8-4991f4c7597d18ce.jpg'
+        },
+        {
+            id: 'fairchild',
+            name: 'Fairchild Tropical Garden',
+            desc: 'World-renowned 83-acre tropical paradise. Stunning plants, butterflies, and peaceful paths.',
+            price: '$$',
+            time: '45 min',
+            tags: ['history', 'fun'],
+            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/9f/02/80/fairchild-tropical-botanic.jpg?w=1200&h=1200&s=1'
+        },
+        {
+            id: 'miamibeachbotanical',
+            name: 'Miami Beach Botanical Garden',
+            desc: 'FREE hidden gem! Beautiful garden oasis in the heart of Miami Beach.',
+            price: '$',
+            time: '40 min',
+            tags: ['history', 'fun'],
+            img: ''
+        },
+        {
+            id: 'greenhat',
+            name: 'The Green Hat Speakeasy',
+            desc: 'Secret bar inside Xtreme Action Park. Requires weekly code to enter. Escape room vibes!',
+            price: '$$',
+            time: '15 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'room901',
+            name: 'Room Nine01 (RM. 901)',
+            desc: '1920s Prohibition-era speakeasy at Hyatt Centric. Red velvet, vintage vibes, live music.',
+            price: '$$',
+            time: '20 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'unitb',
+            name: 'Unit B',
+            desc: 'Downtown Fort Lauderdale hideaway with live jazz and burlesque shows. Super sexy vibes.',
+            price: '$$',
+            time: '25 min',
+            tags: ['fun', 'art'],
+            img: ''
+        },
+        {
+            id: 'ifly',
+            name: 'iFLY Indoor Skydiving',
+            desc: 'Simulate skydiving indoors! Feel the rush without jumping out of a plane.',
+            price: '$$$',
+            time: '45 min',
+            tags: ['fun'],
+            img: 'https://cdn.tripster.com/media/product/gallery/original/iFLY_Fort_Lauderdale_(37419).jpg'
+        },
+        {
+            id: 'glitchbar',
+            name: 'Glitch Bar & Arcade',
+            desc: 'Retro arcade games + craft cocktails. Pac-Man and drinks = perfect date night!',
+            price: '$$',
+            time: '30 min',
+            tags: ['fun'],
+            img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGGKrTiQ8Hsj0WAAqnX4DNtfW7pmHZL5Ny5g&s'
+        },
+        {
+            id: 'tenthlevel',
+            name: 'Tenth Level Tavern',
+            desc: 'Board game cafe with 1000+ games. Friendly staff help you pick the perfect game!',
+            price: '$',
+            time: '25 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'blackbird',
+            name: 'Blackbird Ordinary',
+            desc: 'Speakeasy-style bar with board games, vintage vibes, and great cocktails.',
+            price: '$$',
+            time: '30 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'escapology',
+            name: 'Escapology Fort Lauderdale',
+            desc: 'Themed escape rooms. Work together to solve puzzles and escape in 60 minutes!',
+            price: '$$',
+            time: '25 min',
+            tags: ['fun'],
+            img: 'https://www.escapology.com/_next/image?url=https%3A%2F%2Fassets01.escapdev.com%2Fuploads%2FScooby_Doo_Game_Room_with_Characters_in_the_TV_3ac841fa78.png&w=1920&q=75'
+        },
+        {
+            id: 'boxroom',
+            name: 'Boxroom Escape Games',
+            desc: 'Unique escape room experiences. Great for testing teamwork!',
+            price: '$$',
+            time: '30 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'chopshops',
+            name: 'CHOPS + HOPS',
+            desc: 'Throw axes while drinking craft beer. Surprisingly fun and safe!',
+            price: '$$',
+            time: '30 min',
+            tags: ['fun'],
+            img: 'https://images.squarespace-cdn.com/content/v1/5f5f8e4cd6f027255c844d9d/1600098579394-ZBBI39VI75IC8MEJSP3N/flag+bay.jpg?format=2500w'
+        },
+        {
+            id: 'axeholehouse',
+            name: 'The Axe Hole House',
+            desc: 'Another great axe throwing spot. Friendly competition!',
+            price: '$$',
+            time: '35 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'skyzone',
+            name: 'Sky Zone Trampoline Park',
+            desc: 'Indoor trampolines, foam pits, dodgeball. Jump around and be kids again!',
+            price: '$$',
+            time: '15 min',
+            tags: ['fun'],
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Trampoline_park.jpg/640px-Trampoline_park.jpg'
+        },
+        {
+            id: 'urbanair',
+            name: 'Urban Air Adventure Park',
+            desc: 'Trampolines + obstacle courses inside Xtreme Action Park. Super active date!',
+            price: '$$',
+            time: '15 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'justthefunny',
+            name: 'Just The Funny Improv',
+            desc: 'Live improv comedy based on YOUR suggestions! Hilarious and interactive.',
+            price: '$$',
+            time: '35 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'ftlimprov',
+            name: 'Fort Lauderdale Improv',
+            desc: 'Top-name comedians. Great dinner + show packages available.',
+            price: '$$',
+            time: '25 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'miamiimprov',
+            name: 'Miami Improv',
+            desc: 'Comedy shows + unique live D&D show. Laughs guaranteed!',
+            price: '$$',
+            time: '35 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'swapshop',
+            name: 'Swap Shop Drive-In Theater',
+            desc: 'Classic drive-in movie experience. Super close and nostalgic!',
+            price: '$',
+            time: '10 min',
+            tags: ['fun'],
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Drive-in_theater.jpg/640px-Drive-in_theater.jpg'
+        },
+        {
+            id: 'happypaws',
+            name: 'Happy Paws Cat Cafe',
+            desc: 'Play with adoptable kittens for an hour in Pembroke Pines. SO cute!',
+            price: '$$',
+            time: '10 min',
+            tags: ['fun'],
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Cat_playing_with_a_toy.jpg/640px-Cat_playing_with_a_toy.jpg'
+        },
+        {
+            id: 'doggiebag',
+            name: 'Doggie Bag Cafe',
+            desc: 'Indoor dog park + cafe. Great if you have a dog or want to meet friendly pups!',
+            price: '$',
+            time: '30 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'cafevico',
+            name: 'Café Vico',
+            desc: 'Authentic Italian in Coral Gables. Cozy, romantic, and delicious pasta!',
+            price: '$$',
+            time: '40 min',
+            tags: ['food'],
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Italian_pasta.jpg/640px-Italian_pasta.jpg'
+        },
+        {
+            id: 'serafina',
+            name: 'Trattoria Serafina',
+            desc: 'Romantic Italian with beautiful outdoor seating in Coral Gables.',
+            price: '$$$',
+            time: '40 min',
+            tags: ['food'],
+            img: ''
+        },
+        {
+            id: 'ilmulino',
+            name: 'Il Mulino New York',
+            desc: 'Upscale Italian fine dining in Sunny Isles. Special occasion spot!',
+            price: '$$$',
+            time: '45 min',
+            tags: ['food'],
+            img: ''
+        },
+        {
+            id: 'bachour',
+            name: 'Bachour',
+            desc: 'World-famous French pastries and desserts. Instagram-worthy and incredible taste!',
+            price: '$$',
+            time: '35 min',
+            tags: ['food'],
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/French_pastries.jpg/640px-French_pastries.jpg'
+        },
+        {
+            id: 'dripndip',
+            name: 'Drip n Dip',
+            desc: 'Instagram-worthy dessert bar with crazy sundaes and shakes. Fun and sweet!',
+            price: '$$',
+            time: '40 min',
+            tags: ['food', 'fun'],
+            img: ''
+        },
+        {
+            id: 'lasolasgondola',
+            name: 'Las Olas Gondola Ride',
+            desc: 'Private gondola ride on New River! Can add dinner. Super romantic!',
+            price: '$$$',
+            time: '20 min',
+            tags: ['fun', 'food'],
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Gondola_ride.jpg/640px-Gondola_ride.jpg'
+        },
+        {
+            id: 'nube',
+            name: 'Nubé Rooftop Bar',
+            desc: 'Rooftop views at Hilton Fort Lauderdale Beach. Perfect for sunset drinks!',
+            price: '$$',
+            time: '25 min',
+            tags: ['food', 'fun'],
+            img: ''
+        },
+        {
+            id: 'rooftop1wlo',
+            name: 'Rooftop @1WLO',
+            desc: 'Downtown Fort Lauderdale rooftop with amazing city views and cocktails.',
+            price: '$$',
+            time: '25 min',
+            tags: ['food', 'fun'],
+            img: ''
+        },
+        {
+            id: 'miamifoodtours',
+            name: 'Miami Food Tours',
+            desc: 'Guided walking tours through neighborhoods. Eat your way through Miami!',
+            price: '$$$',
+            time: '35 min',
+            tags: ['food', 'fun'],
+            img: ''
+        },
+        {
+            id: 'italiancooking',
+            name: 'Italian Cooking Class',
+            desc: 'Learn to make pasta from scratch together! Cozymeal or Classpop hosts.',
+            price: '$$$',
+            time: '30 min',
+            tags: ['food', 'fun', 'art'],
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Making_pasta.jpg/640px-Making_pasta.jpg'
+        },
+        {
+            id: 'peachtree',
+            name: 'Peachtree Revival Market',
+            desc: 'Vintage thrift shopping + cafe. Find unique clothes and enjoy coffee together!',
+            price: '$$',
+            time: '40 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'animaledventures',
+            name: 'Animal EDventures',
+            desc: 'Private exotic animal encounters! Hold sloths, feed kangaroos, meet lemurs!',
+            price: '$$$',
+            time: '30 min',
+            tags: ['fun'],
+            img: ''
+        },
+        {
+            id: 'matheson',
+            name: 'Matheson Hammock Beach',
+            desc: 'Unique tidal pool beach with amazing sunset views. Calm water and romantic!',
+            price: '$',
+            time: '40 min',
+            tags: ['fun'],
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Beach_sunset.jpg/640px-Beach_sunset.jpg'
+        },
+        {
+            id: 'hollywoodbeach',
+            name: 'Hollywood Beach Broadwalk',
+            desc: '2.5-mile boardwalk perfect for sunset walks, bikes, and beach time.',
+            price: '$',
+            time: '15 min',
+            tags: ['fun'],
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Hollywood_Beach_Broadwalk.jpg/640px-Hollywood_Beach_Broadwalk.jpg'
         }
         ];
+
+        // --- HELPER FUNCTIONS ---
+        window.getFallbackImage = function(category) {
+            return FALLBACK_IMAGES[category] || FALLBACK_IMAGES.default;
+        }
 
         // --- RENDER LOGIC ---
         const pool = document.getElementById('pool');
@@ -596,9 +1167,12 @@
             return `<span class="tag ${cls}">${t}</span>`;
         }).join('');
 
+        // Use fallback immediately if no image URL provided
+        const imgSrc = data.img || getFallbackImage(data.tags[0]);
+
         card.innerHTML = `
             <div class="card-img-container">
-            <img src="${data.img}" class="card-img" alt="${data.name}" loading="lazy">
+            <img src="${imgSrc}" class="card-img" alt="${data.name}" loading="lazy" onerror="this.onerror=null; this.src=getFallbackImage('${data.tags[0]}');">
             <div class="drive-badge">🚗 <span class="${driveClass}">${data.time}</span></div>
             </div>
             <div class="card-body">
@@ -613,6 +1187,43 @@
 
         card.addEventListener('dragstart', () => { card.classList.add('dragging'); });
         card.addEventListener('dragend', () => { card.classList.remove('dragging'); });
+
+        // Add tooltip functionality if details exist
+        if (data.details) {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'card-tooltip';
+            tooltip.innerHTML = `
+                <div class="tooltip-title">${data.name}</div>
+                <div class="tooltip-section">
+                    <div class="tooltip-label">💵 Pricing</div>
+                    <div class="tooltip-content"><span class="tooltip-price">${data.details.pricing}</span></div>
+                </div>
+                <div class="tooltip-section">
+                    <div class="tooltip-label">🕒 Hours</div>
+                    <div class="tooltip-content tooltip-hours">${data.details.hours}</div>
+                </div>
+                <div class="tooltip-section">
+                    <div class="tooltip-label">📝 What to Expect</div>
+                    <div class="tooltip-content">${data.details.whatToExpect}</div>
+                </div>
+                ${data.details.notes ? `<div class="tooltip-section">
+                    <div class="tooltip-label">⭐ Good to Know</div>
+                    <div class="tooltip-content">${data.details.notes}</div>
+                </div>` : ''}
+            `;
+            document.body.appendChild(tooltip);
+
+            card.addEventListener('mouseenter', (e) => {
+                const rect = card.getBoundingClientRect();
+                tooltip.style.left = rect.right + 15 + 'px';
+                tooltip.style.top = rect.top + 'px';
+                tooltip.classList.add('show');
+            });
+
+            card.addEventListener('mouseleave', () => {
+                tooltip.classList.remove('show');
+            });
+        }
 
         return card;
         }
