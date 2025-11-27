@@ -74,6 +74,30 @@
     transform: translateY(-2px);
   }
 
+  .random-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-blue));
+    border: 2px solid var(--accent);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .random-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 64, 129, 0.6);
+  }
+
+  .random-btn:active {
+    transform: translateY(-1px) scale(1.02);
+  }
+
   /* --- TIER GRID --- */
   .tier-container {
     width: 100%;
@@ -288,7 +312,7 @@
 
   /* --- TOOLTIP SYSTEM --- */
   .card-tooltip {
-    position: absolute;
+    position: fixed;
     background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
     color: var(--text-main);
     padding: 16px 20px;
@@ -353,6 +377,196 @@
     font-weight: 600;
   }
 
+  /* --- RANDOM DATE MODAL --- */
+  .random-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 20000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .random-modal.show {
+    display: flex;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .random-modal-content {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 0 2px rgba(255, 64, 129, 0.3);
+    position: relative;
+    animation: slideUp 0.4s ease;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .random-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 28px;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .random-modal-close:hover {
+    background: rgba(255, 64, 129, 0.2);
+    color: var(--accent);
+    transform: rotate(90deg);
+  }
+
+  .random-modal-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, var(--accent), var(--accent-blue));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .random-modal-subtitle {
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+  }
+
+  .random-date-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 20px rgba(255, 64, 129, 0.3);
+  }
+
+  .random-date-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-main);
+  }
+
+  .random-date-desc {
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+
+  .random-date-meta {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+
+  .random-date-badge {
+    background: var(--panel-bg);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    border: 1px solid #444;
+  }
+
+  .random-date-details {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+  }
+
+  .random-detail-section {
+    margin-bottom: 15px;
+  }
+
+  .random-detail-label {
+    font-weight: 600;
+    color: var(--accent-blue);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  .random-detail-content {
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .random-modal-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+
+  .random-action-btn {
+    padding: 12px 30px;
+    border-radius: 25px;
+    border: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .random-action-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-blue));
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
+  }
+
+  .random-action-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 64, 129, 0.6);
+  }
+
+  .random-action-secondary {
+    background: var(--panel-bg);
+    color: var(--text-main);
+    border: 1px solid #444;
+  }
+
+  .random-action-secondary:hover {
+    background: var(--card-bg);
+    border-color: var(--accent);
+  }
+
 </style>
 </head>
 <body>
@@ -366,6 +580,7 @@
     <button class="filter-btn" onclick="filterCards('history')">🏛️ History</button>
     <button class="filter-btn" onclick="filterCards('fun')">🎢 Fun & Silly</button>
     <button class="filter-btn" onclick="filterCards('food')">🌿 Healthy Eats</button>
+    <button class="random-btn" onclick="showRandomDate()">🎲 Feeling Spontaneous?</button>
   </div>
 
   <div class="tier-container">
@@ -379,6 +594,24 @@
   <div class="pool-section">
     <h3 class="pool-title">👇 Unranked Dates 👇</h3>
     <div class="dropzone pool-grid" id="pool"></div>
+  </div>
+
+  <!-- Random Date Modal -->
+  <div class="random-modal" id="randomModal">
+    <div class="random-modal-content">
+      <button class="random-modal-close" onclick="closeRandomModal()">&times;</button>
+      <h2 class="random-modal-title">🎲 Your Random Date Suggestion!</h2>
+      <p class="random-modal-subtitle">Feeling adventurous? Here's a spontaneous date idea for you!</p>
+
+      <div class="random-date-card" id="randomDateCard">
+        <!-- Content will be populated by JavaScript -->
+      </div>
+
+      <div class="random-modal-actions">
+        <button class="random-action-btn random-action-primary" onclick="showRandomDate()">🔄 Pick Another</button>
+        <button class="random-action-btn random-action-secondary" onclick="closeRandomModal()">Close</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -649,7 +882,13 @@
             price: '$$',
             time: '40 min',
             tags: ['history', 'fun'],
-            img: 'https://www.coralgables.com/sites/default/files/styles/internal_banner_mobile/public/2022-04/venetian-pool7.jpg?itok=SDCqKeed'
+            img: 'https://www.coralgables.com/sites/default/files/styles/internal_banner_mobile/public/2022-04/venetian-pool7.jpg?itok=SDCqKeed',
+            details: {
+                pricing: 'CLOSED for renovations until late summer 2025 | When open: Residents $6.50 | Non-residents $15-21 (seasonal)',
+                hours: 'Currently CLOSED for restoration | When open: Tue-Sun 10 AM - 4 PM',
+                whatToExpect: 'Historic 1920s coral rock quarry transformed into stunning pool. Beautiful waterfalls, grottos, Venetian architecture. Spring-fed fresh water. Plan 2-3 hours when reopens.',
+                notes: 'CHECK before visiting - closed for renovations! Min age: 3 years old. Must be 38" tall. Coral Gables residents get big discount!'
+            }
         },
         {
             id: 'lioncountry',
@@ -658,7 +897,13 @@
             price: '$$$',
             time: '65 min',
             tags: ['fun'],
-            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/crm/visitflorida/50239_ykt0ct8138xlxs66kk384vjq1vgt4r2u_965181ae-5056-a36a-0bcf1b8120f6041f.jpg'
+            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/crm/visitflorida/50239_ykt0ct8138xlxs66kk384vjq1vgt4r2u_965181ae-5056-a36a-0bcf1b8120f6041f.jpg',
+            details: {
+                pricing: 'Ages 10+: $54.99 | Kids 3-9: Lower rate | Includes drive-through safari + Safari World park',
+                hours: 'Check website for seasonal hours',
+                whatToExpect: 'Drive-through safari with lions, giraffes, rhinos walking by your car! Plus Safari World with rides, water play, animal encounters. Plan full day (4-6 hours).',
+                notes: 'Stay in your car for safari portion! Buy tickets online. In Loxahatchee (West Palm Beach area). Amazing animal experiences!'
+            }
         },
         {
             id: 'puttshack',
@@ -667,7 +912,13 @@
             price: '$$',
             time: '30-60 min',
             tags: ['fun'],
-            img: 'https://platform.miami.eater.com/wp-content/uploads/sites/12/chorus/uploads/chorus_asset/file/24133408/IMG_0648.JPG?quality=90&strip=all&crop=16.654761904762,0,66.690476190476,100'
+            img: 'https://platform.miami.eater.com/wp-content/uploads/sites/12/chorus/uploads/chorus_asset/file/24133408/IMG_0648.JPG?quality=90&strip=all&crop=16.654761904762,0,66.690476190476,100',
+            details: {
+                pricing: '~$16 per player for 9-hole course | Food & drinks available',
+                hours: 'Puttshack Miami: Mon-Thu 11 AM-11 PM | Fri-Sat 11 AM-1 AM | Sun 11 AM-10 PM | 21+ only after 8 PM',
+                whatToExpect: 'Tech-infused mini golf at Brickell City Center (Puttshack) or Tiger Woods-designed courses (PopStroke). Full bar, food. Plan 1-1.5 hours. Competitive fun!',
+                notes: 'Book online! Puttshack has locations in Miami & Dania Beach. PopStroke has different locations. Great date night with drinks!'
+            }
         },
         {
             id: 'oleta',
@@ -676,7 +927,13 @@
             price: '$',
             time: '25 min',
             tags: ['fun', 'food'],
-            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fit,w_1440,h_900/crm/miamifl/110491_5406_576b7d01-5056-a36a-0bd06519340e8a63.jpg'
+            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fit,w_1440,h_900/crm/miamifl/110491_5406_576b7d01-5056-a36a-0bd06519340e8a63.jpg',
+            details: {
+                pricing: 'Park entry: $6 per vehicle | Kayak/SUP rentals: ~$20-30/hour via Oleta River Outdoor Center',
+                hours: 'Park: 8 AM - sunset daily | Outdoor Center: Mon-Fri 9 AM-6 PM | Sat-Sun 8 AM-6 PM',
+                whatToExpect: 'Florida\'s largest urban park. Rent kayaks/paddleboards, explore mangrove tunnels, bike trails, beach. Active outdoor date. Plan 2-4 hours.',
+                notes: 'Rent equipment from Oleta River Outdoor Center inside park. Great for active couples! Bring sunscreen & water. Beautiful nature escape.'
+            }
         },
         {
             id: 'tearoom',
@@ -685,7 +942,13 @@
             price: '$$',
             time: '55 min',
             tags: ['history', 'food'],
-            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/4c/a2/0c/the-wicker-room.jpg?w=900&h=500&s=1'
+            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/4c/a2/0c/the-wicker-room.jpg?w=900&h=500&s=1',
+            details: {
+                pricing: 'Royal Tea: $33 | High Tea: $30 | Afternoon Tea: $27 | Nursery Tea: $15 | 24+ loose leaf teas',
+                hours: 'CLOSED Mon-Tue | Wed-Fri: 11 AM-4 PM | Sat-Sun: 9 AM-5 PM',
+                whatToExpect: 'Traditional English tea service in historic Cauley Square Village. Finger sandwiches, scones, pastries. Vintage decor. Plan 1.5-2 hours. Very romantic & elegant.',
+                notes: 'Reservations required - 24 hours notice! Email: info@tearoommiami.com. Perfect for special occasions. Multiple dining rooms with antique decor.'
+            }
         },
         {
             id: 'soundscape',
@@ -694,7 +957,13 @@
             price: '$',
             time: '40 min',
             tags: ['art', 'fun'],
-            img: 'https://www.miamibeachfl.gov/wp-content/uploads/2024/02/Parks-Gallery-1-MiamiBeachSoundstage.jpeg'
+            img: 'https://www.miamibeachfl.gov/wp-content/uploads/2024/02/Parks-Gallery-1-MiamiBeachSoundstage.jpeg',
+            details: {
+                pricing: 'FREE! No tickets needed',
+                hours: 'Wednesdays 8 PM (Oct-May season) | Rain or shine',
+                whatToExpect: 'Free outdoor movies on 7,000 sq ft projection wall at New World Center. Bring blankets or lawn chairs. Grass seating. Romantic & casual. Plan 2-3 hours.',
+                notes: 'Text MBFILM to 91011 for weekly movie updates! Located at 500 17th St, Miami Beach. Great for laid-back dates!'
+            }
         },
         {
             id: 'betterthansex',
@@ -703,7 +972,13 @@
             price: '$$',
             time: '40 min',
             tags: ['food', 'art'],
-            img: 'https://images.getbento.com/accounts/73b409766e10013f613f866793e5091e/media/images/5462PXL_20231110_011912105.LONG_EXPOSURE-01.COVER.jpg?w=1200&fit=crop&auto=compress,format&cs=origin&h=600'
+            img: 'https://images.getbento.com/accounts/73b409766e10013f613f866793e5091e/media/images/5462PXL_20231110_011912105.LONG_EXPOSURE-01.COVER.jpg?w=1200&fit=crop&auto=compress,format&cs=origin&h=600',
+            details: {
+                pricing: 'Moderate $11-25 | Desserts only menu with creative names',
+                hours: 'CLOSED Mon-Tue | Wed-Fri 6-11 PM | Sat 6 PM-12 AM | Sun 6-11 PM | Key West location',
+                whatToExpect: 'Dessert-only restaurant with adult-themed menu names. Award-winning desserts, chocolate wines. Dark, intimate speakeasy atmosphere. Max party: 4 people. Very romantic!',
+                notes: 'NOTE: Main location is Key West, not Miami! Reservations recommended. Try Tall Dark & Handsome or Kinky Key Lime Pie!'
+            }
         },
         {
             id: 'wynwood',
@@ -712,7 +987,13 @@
             price: '$',
             time: '25 min',
             tags: ['art', 'fun'],
-            img: 'https://thewynwoodwalls.com/wp-content/uploads/2023/12/NK-231203-WW-3832-copy-2-2048x1364.jpg'
+            img: 'https://thewynwoodwalls.com/wp-content/uploads/2023/12/NK-231203-WW-3832-copy-2-2048x1364.jpg',
+            details: {
+                pricing: 'Adults: $12 | Kids 5 and under: FREE | FREE on 2nd Saturday 5-10 PM (Art Walk)',
+                hours: 'Daily: 10 AM - 7 PM',
+                whatToExpect: '40+ murals, 12 large sculptures, 3 galleries on 2-acre complex. Can spray paint walls for free (3 min). Super Instagram-worthy! Plan 1-1.5 hours.',
+                notes: 'FREE Art Walk 2nd Saturday each month 5-10 PM! Miami-Dade locals sometimes get free admission. Perfect for photo-loving couples!'
+            }
         },
         {
             id: 'gumbolimbo',
@@ -721,7 +1002,13 @@
             price: '$',
             time: '45 min',
             tags: ['fun', 'history'],
-            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/77/8c/d4/gumbo-limbo-nature-center.jpg?w=900&h=500&s=1'
+            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/77/8c/d4/gumbo-limbo-nature-center.jpg?w=900&h=500&s=1',
+            details: {
+                pricing: 'FREE admission! Donations appreciated',
+                hours: 'Mon: 12-4 PM | Tue-Sun: 9 AM - 4 PM | FREE parking',
+                whatToExpect: 'Nature center with resident sea turtles, marine aquariums, boardwalks, 40-ft observation tower, butterfly gardens. Educational & cute! Plan 1-1.5 hours.',
+                notes: 'Completely FREE in Boca Raton! See rescued sea turtles up close. Great for animal-loving couples. Easy beach access nearby.'
+            }
         },
         {
             id: 'nakedfarmer',
@@ -730,7 +1017,13 @@
             price: '$',
             time: '30 min',
             tags: ['food'],
-            img: 'https://images.squarespace-cdn.com/content/v1/61dece231a26677d49b63188/1665776582704-Z9LFQXC4VB5DLP8QRIY6/Naked+Farmer+Coral+Gables+137+Giralda+Ave+4.jpg'
+            img: 'https://images.squarespace-cdn.com/content/v1/61dece231a26677d49b63188/1665776582704-Z9LFQXC4VB5DLP8QRIY6/Naked+Farmer+Coral+Gables+137+Giralda+Ave+4.jpg',
+            details: {
+                pricing: 'Harvest plates ~$24 | Proteins $7-9 | Sides $8 | Build-your-own style',
+                hours: 'Mon-Sat: 11 AM - 10 PM | Sun: 12-10 PM',
+                whatToExpect: 'Farm-to-table build-your-own bowls. Choose grain/greens + 2 sides + protein + dressing. Fresh, seasonal, locally-sourced. Healthy & tasty. Plan 45 min-1 hour.',
+                notes: 'Located at 137 Giralda Ave, Coral Gables. Great for health-conscious dates! Dine-in, pickup, or delivery available.'
+            }
         },
         {
             id: 'lasolas',
@@ -739,7 +1032,13 @@
             price: '$$',
             time: '30 min',
             tags: ['fun', 'art'],
-            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/crm/ftlauderdale/11324281495_dfa0982014_b0-9279d1d25056b3a_9279d401-5056-b3a8-4921dc0d91c6c904.jpg'
+            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/crm/ftlauderdale/11324281495_dfa0982014_b0-9279d1d25056b3a_9279d401-5056-b3a8-4921dc0d91c6c904.jpg',
+            details: {
+                pricing: 'FREE to walk! Shopping/dining varies | Trolley: $1 per ride or $3 all-day',
+                hours: '24/7 street access | Individual shop/restaurant hours vary',
+                whatToExpect: 'Fort Lauderdale\'s vibrant heart. High-end boutiques, art galleries, diverse restaurants (French, Greek, Korean, cafes). Walk Riverwalk, visit Huizenga Plaza. Plan 2-3 hours.',
+                notes: 'Free to stroll! Sun Trolley runs along boulevard. Great for window shopping, people watching, riverside dining. Very walkable.'
+            }
         },
         {
             id: 'musillusions',
@@ -748,7 +1047,13 @@
             price: '$$',
             time: '35 min',
             tags: ['art', 'fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'TEMPORARILY CLOSED as of 2025 | Previous pricing: Adults ~$30 | Kids 4-12: ~$20',
+                hours: 'Currently CLOSED - check website for reopening updates',
+                whatToExpect: 'When open: Interactive optical illusions, mind-bending exhibits, photo opportunities. Plan 1-1.5 hours. Fun for curious minds!',
+                notes: 'CHECK BEFORE VISITING - currently closed! Check official website for reopening plans. Alternative: Visit Paradox Museum nearby in Wynwood instead!'
+            }
         },
         {
             id: 'paradox',
@@ -757,7 +1062,13 @@
             price: '$$',
             time: '30 min',
             tags: ['art', 'fun'],
-            img: 'https://paradoxmuseum.com/_astro/gallery2_cur62w_Zjlov5.png'
+            img: 'https://paradoxmuseum.com/_astro/gallery2_cur62w_Zjlov5.png',
+            details: {
+                pricing: 'Adults: $26+ | Children: $21+ | Military/Florida residents: Discounts available',
+                hours: 'Mon-Fri: 12-7 PM | Sat: 10 AM-9 PM | Sun: 10 AM-7 PM | Last entry 1 hour before close',
+                whatToExpect: '70+ thrilling exhibits challenging your reality in Wynwood. Interactive, paradox-based displays. Plan ~75 minutes. Great for groups 10+. Very Instagram-worthy!',
+                notes: 'Located at 2301 N Miami Ave in Wynwood. Buy tickets online! Groups 10-19 can book directly, 15+ get discounts & private tours.'
+            }
         },
         {
             id: 'pamm',
@@ -766,7 +1077,13 @@
             price: '$$',
             time: '35 min',
             tags: ['art', 'history'],
-            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/31/8b/0e/caption.jpg?w=900&h=-1&s=1'
+            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/31/8b/0e/caption.jpg?w=900&h=-1&s=1',
+            details: {
+                pricing: 'Adults: $18 | Seniors/Students: $14 | Kids 7-18: $14 | Under 7: FREE',
+                hours: 'CLOSED Wed | Mon-Tue & Fri-Sun: 11 AM-6 PM | Thu: 11 AM-9 PM',
+                whatToExpect: 'Contemporary art museum on Biscayne Bay. Stunning waterfront building, world-class exhibits. Plan 2-3 hours. Beautiful views!',
+                notes: 'FREE 2nd Saturdays all day! FREE Thursdays 5-10 PM with RSVP. Healthcare/military/veterans FREE anytime. Library passes available!'
+            }
         },
         {
             id: 'rubell',
@@ -775,7 +1092,13 @@
             price: '$$',
             time: '30 min',
             tags: ['art'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Adults: $15 | Seniors 65+: $12 | Students/Youth 7-18: $10 | Under 7: FREE',
+                hours: 'CLOSED Mon-Tue | Wed-Thu: 11:30 AM-5:30 PM | Fri-Sat: 11:30 AM-7:30 PM | Sun: 11:30 AM-5:30 PM',
+                whatToExpect: '7,200+ contemporary art pieces by 1,000+ artists in Allapattah warehouse. Includes Kusama, Basquiat, Haring, Koons. Plan 2-3 hours. Advance tickets recommended.',
+                notes: 'US Military/Veterans +3 FREE! Museum for All +3 FREE! Visitors with disabilities +1 FREE! Buy tickets online in advance.'
+            }
         },
         {
             id: 'norton',
@@ -784,7 +1107,13 @@
             price: '$$',
             time: '65 min',
             tags: ['art', 'history'],
-            img: 'https://www.norton.org/storage/app/media/Home/Splash%20mobile%20Norton%20image.jpg'
+            img: 'https://www.norton.org/storage/app/media/Home/Splash%20mobile%20Norton%20image.jpg',
+            details: {
+                pricing: 'Adults: $18 | Seniors: $15 | Students: $5 | Kids 12 and under: FREE',
+                hours: 'Mon: 10 AM-5 PM | CLOSED Tue | Wed-Thu: 10 AM-5 PM | Fri: 10 AM-10 PM | Sat: 10 AM-5 PM | Sun: 11 AM-5 PM',
+                whatToExpect: 'World-class art museum in West Palm Beach. Beautiful gardens, rotating exhibits. Plan 2-3 hours. Parking $3/hr (max 3 hrs, free for members).',
+                notes: 'Military/Veterans & WPB residents FREE every Sat! Palm Beach County residents FREE Sat in summer! Half-price Thu evenings!'
+            }
         },
         {
             id: 'miyceramic',
@@ -793,7 +1122,13 @@
             price: '$$',
             time: '25 min',
             tags: ['art', 'fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Paint-your-own pottery varies by piece | Potter wheel classes & hand-building available',
+                hours: 'Mon-Thu: 10 AM-9 PM | CLOSED Fri | Sat: 10 AM-4 PM | Sun: 1-5 PM',
+                whatToExpect: 'Pottery studio in Hollywood FL offering PYOP, wheel classes, hand-building, glass fusion. Drop-in friendly. Take home custom pottery! Plan 1-2 hours.',
+                notes: 'Located at 6791 Taft St, Hollywood. Call: 954-927-7300. Date night pottery wheel classes available! Creative couple activity.'
+            }
         },
         {
             id: 'splatterroom',
@@ -802,7 +1137,13 @@
             price: '$$',
             time: '20 min',
             tags: ['art', 'fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Splatter Experience: $18-25 per person | Includes private room & protective gear',
+                hours: 'Varies by location - check Pinspiration Davie website',
+                whatToExpect: 'Private splatter room for throwing paint! Includes poncho, shoe caps, goggles. Upgrades: black light glow $10, large canvas $25-29. Plan 1 hour. Messy fun!',
+                notes: 'Located at 8826 W State Rd 84, Davie. Reservation required! Perfect for creative, playful dates. Bring clothes you don\'t mind getting messy!'
+            }
         },
         {
             id: 'candleland',
@@ -811,7 +1152,13 @@
             price: '$$',
             time: '25 min',
             tags: ['art', 'fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: '$57 per person | Includes all materials, vessel, fragrance & finished candle',
+                hours: 'Varies by location (Coral Gables, Fort Lauderdale, Delray Beach)',
+                whatToExpect: '45-60 minute candle-making class. Choose your fragrances & vessel. Step-by-step instruction. Candles set in 45 min - wait or pick up later. Romantic activity!',
+                notes: 'Locations in Coral Gables, Fort Lauderdale & Delray Beach. Book online at candlelandmiami.com. Great keepsake from your date!'
+            }
         },
         {
             id: 'flamingo',
@@ -820,7 +1167,13 @@
             price: '$$',
             time: '20 min',
             tags: ['history', 'fun'],
-            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/crm/ftlauderdale/flamingo-gardens-las-vegas0-0280158e5056b3a_028017eb-5056-b3a8-4991f4c7597d18ce.jpg'
+            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/crm/ftlauderdale/flamingo-gardens-las-vegas0-0280158e5056b3a_028017eb-5056-b3a8-4991f4c7597d18ce.jpg',
+            details: {
+                pricing: 'Adults (12+): $24 | Kids 3-11: $17 | Under 3: FREE | FREE parking',
+                hours: 'Daily: 9:30 AM - 5 PM (last entry 4 PM) | Closed Thanksgiving & Christmas',
+                whatToExpect: '60-acre tropical oasis with 250 bird species, Caribbean flamingos, roaming peacocks, 3,000+ plant species. FREE tram rides every 30 min. FREE wildlife shows 11:30 AM, 1:30 PM, 3:30 PM. Plan 2-3 hours.',
+                notes: 'Located in Davie, 17 miles west of Fort Lauderdale. Flamingos here year-round! Beautiful for nature-loving couples.'
+            }
         },
         {
             id: 'fairchild',
@@ -829,7 +1182,13 @@
             price: '$$',
             time: '45 min',
             tags: ['history', 'fun'],
-            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/9f/02/80/fairchild-tropical-botanic.jpg?w=1200&h=1200&s=1'
+            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/9f/02/80/fairchild-tropical-botanic.jpg?w=1200&h=1200&s=1',
+            details: {
+                pricing: 'Adults: $24.95 | Seniors: $17.95 | Kids 3-11: $11.95 | Under 3: FREE',
+                hours: 'Daily: 10 AM - 5 PM',
+                whatToExpect: '83-acre tropical botanical garden with 100+ palm species, Japanese landscapes, water features. Plan 2-3 hours. Dogs allowed on leash!',
+                notes: 'Military/Veterans FREE year-round! Golden Ticket seniors get free admission 1st Wednesday. $5 off if you bike/walk/transit there.'
+            }
         },
         {
             id: 'miamibeachbotanical',
@@ -838,7 +1197,13 @@
             price: '$',
             time: '40 min',
             tags: ['history', 'fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'FREE admission!',
+                hours: 'Tue-Sun: 9 AM - 5 PM | Closed Mondays & major holidays',
+                whatToExpect: '3-acre tropical oasis with Japanese garden, koi pond, native gardens, water features, 100+ palm species. Peaceful urban refuge. Plan 30-60 minutes.',
+                notes: 'Completely FREE! Dogs allowed on leash. Great for quick romantic walks. Very accessible due to compact size.'
+            }
         },
         {
             id: 'greenhat',
@@ -847,7 +1212,13 @@
             price: '$$',
             time: '15 min',
             tags: ['fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Cocktails: $18 | No cover charge',
+                hours: 'Mon-Thu: 4-10 PM | Fri-Sat: 6 PM-12 AM | Sun: 4-10 PM',
+                whatToExpect: 'Hidden speakeasy inside Xtreme Action Park. Seats 15-20 people. 40+ craft cocktails plus secret menu. FREE escape room with clues. Win secret menu drink!',
+                notes: 'Requires entry code to unlock door! Call ahead: 954-388-2984. Very limited capacity - reservations recommended. Prohibition-era theme.'
+            }
         },
         {
             id: 'room901',
@@ -856,7 +1227,13 @@
             price: '$$',
             time: '20 min',
             tags: ['fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: '$50-60 per person minimum (food & beverage)',
+                hours: 'Tue-Sun: 5:30-11:30 PM | Closed Mondays | Timed seatings: 5 PM, 7:15 PM, 9:30 PM',
+                whatToExpect: '1920s Prohibition-themed speakeasy inside Hyatt Centric Las Olas. Craft cocktails, gourmet fare from Chef Greg McGowan. Intimate atmosphere. 2-hour seatings.',
+                notes: 'Reservations REQUIRED - book online! Max party size: 6 people. Must cancel 72 hours in advance. Very exclusive!'
+            }
         },
         {
             id: 'unitb',
@@ -865,7 +1242,13 @@
             price: '$$',
             time: '25 min',
             tags: ['fun', 'art'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Cocktails ~$15 | No cover charge',
+                hours: 'Thu-Sat: 6 PM - 2 AM | Closed Sun-Wed',
+                whatToExpect: 'Prohibition-style speakeasy above Brass Tap. Max 40-60 guests nightly. Craft cocktails in exclusive atmosphere. Intimate setting.',
+                notes: 'MUST get secret door code from website before visiting! Code changes nightly. Call: 754-200-8648. Arrive early - very limited capacity!'
+            }
         },
         {
             id: 'ifly',
@@ -874,7 +1257,13 @@
             price: '$$$',
             time: '45 min',
             tags: ['fun'],
-            img: 'https://cdn.tripster.com/media/product/gallery/original/iFLY_Fort_Lauderdale_(37419).jpg'
+            img: 'https://cdn.tripster.com/media/product/gallery/original/iFLY_Fort_Lauderdale_(37419).jpg',
+            details: {
+                pricing: 'Call for pricing: 954-280-4359 | Packages include 2 or 4 flights (60 seconds each)',
+                hours: 'Mon-Fri: 9 AM - 8 PM | Sat-Sun: 9 AM - 9 PM',
+                whatToExpect: 'Indoor wind tunnel simulates skydiving. Each flight ~60 seconds. Includes gear, training, flight certificate. Total experience ~1.5 hours. Ages 3-103 welcome!',
+                notes: 'Weight limit: 300 lbs max. 260-300 lbs needs evaluation. Book at iflyworld.com/fort-lauderdale. Thrilling couples experience!'
+            }
         },
         {
             id: 'glitchbar',
@@ -883,7 +1272,13 @@
             price: '$$',
             time: '30 min',
             tags: ['fun'],
-            img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGGKrTiQ8Hsj0WAAqnX4DNtfW7pmHZL5Ny5g&s'
+            img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGGKrTiQ8Hsj0WAAqnX4DNtfW7pmHZL5Ny5g&s',
+            details: {
+                pricing: 'Game Pass: $7 (or FREE with drink purchase) | All arcade games FREE PLAY with wristband',
+                hours: 'Mon-Thu: 5 PM-2 AM | Fri: 5 PM-3 AM | Sat: 12 PM-3 AM | Sun: 12 PM-2 AM',
+                whatToExpect: 'Classic & modern arcade machines on free play. Full bar. Retro gaming heaven in Flagler Village. Family-friendly until 8 PM.',
+                notes: 'Kids welcome until 8 PM daily. Must be 21+ after 8 PM. Best Game Pass deal: buy a drink, get wristband free!'
+            }
         },
         {
             id: 'tenthlevel',
@@ -892,7 +1287,13 @@
             price: '$',
             time: '25 min',
             tags: ['fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'FREE admission | ALL 4,000+ video games FREE | Happy Hour (Mon/Wed/Thu/Fri 5-7 PM): $2 off drinks',
+                hours: 'Mon/Wed: 5 PM-12 AM | Thu-Sat: 5 PM-2 AM | Sun: 5 PM-12 AM | Tue: 5 PM-12 AM (2-for-1 drafts)',
+                whatToExpect: 'Broward\'s original arcade bar since 2015. 4,000+ free video games (non-coin). 100+ craft beers, wine, mead. Food vendors Thu-Sat & Tue. Chill gaming vibes.',
+                notes: 'NO tokens or quarters needed! Call: 954-368-8776. Tuesday "Kill the Keg": 2-for-1 draft beers all night. Craft beer focus.'
+            }
         },
         {
             id: 'blackbird',
@@ -901,7 +1302,13 @@
             price: '$$',
             time: '30 min',
             tags: ['fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: '$$-moderate | Happy Hour (daily 3-8 PM): Buy one get one drinks',
+                hours: 'Daily: 3 PM - 5 AM',
+                whatToExpect: 'Brickell bar with 30-foot glass roof. Specialty cocktails with house-made syrups. Live music & dancing. Famous Blackbird Punch. Craft beers & wines.',
+                notes: 'Tuesday Ladies Night (10 PM-1 AM): Free vodka/rum/whiskey drinks for women! Less expensive than South Beach. Great cocktail program.'
+            }
         },
         {
             id: 'escapology',
@@ -910,7 +1317,13 @@
             price: '$$',
             time: '25 min',
             tags: ['fun'],
-            img: 'https://www.escapology.com/_next/image?url=https%3A%2F%2Fassets01.escapdev.com%2Fuploads%2FScooby_Doo_Game_Room_with_Characters_in_the_TV_3ac841fa78.png&w=1920&q=75'
+            img: 'https://www.escapology.com/_next/image?url=https%3A%2F%2Fassets01.escapdev.com%2Fuploads%2FScooby_Doo_Game_Room_with_Characters_in_the_TV_3ac841fa78.png&w=1920&q=75',
+            details: {
+                pricing: '$40 per person (groups of 2-8) | Parking validation: $15 flat rate',
+                hours: 'Daily: 11 AM - 11 PM (Mon-Sun)',
+                whatToExpect: 'Private themed escape rooms for 2-8 players. 60-minute game (90 min total with briefing). Dedicated Game Master provides hints. Multiple room themes available.',
+                notes: 'Minimum age: 7 years old. Arrive 15 minutes early. PRIVATE rooms - no strangers! Great for teamwork & problem-solving couples.'
+            }
         },
         {
             id: 'boxroom',
@@ -919,7 +1332,13 @@
             price: '$$',
             time: '30 min',
             tags: ['fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: '~$20 per person (early booking specials) | Groups 2-10 players',
+                hours: 'Mon-Thu: 3-9:30 PM | Fri: 3-11 PM | Sat: 12-11 PM | Sun: 12-9:30 PM',
+                whatToExpect: 'Hollywood FL escape rooms with 60 minutes to solve puzzles and escape. Highly immersive themed environments. Teams of 2-10. Plan 1.5 hours total.',
+                notes: 'Located at 2042 Hollywood Blvd. Call: 754-800-2042. Book early for better rates! Private room experiences.'
+            }
         },
         {
             id: 'chopshops',
@@ -928,7 +1347,13 @@
             price: '$$',
             time: '30 min',
             tags: ['fun'],
-            img: 'https://images.squarespace-cdn.com/content/v1/5f5f8e4cd6f027255c844d9d/1600098579394-ZBBI39VI75IC8MEJSP3N/flag+bay.jpg?format=2500w'
+            img: 'https://images.squarespace-cdn.com/content/v1/5f5f8e4cd6f027255c844d9d/1600098579394-ZBBI39VI75IC8MEJSP3N/flag+bay.jpg?format=2500w',
+            details: {
+                pricing: 'Axe throwing sessions ~$25-35 | Food & drinks available',
+                hours: 'Check website for current hours | Located in Sistrunk Marketplace',
+                whatToExpect: 'One-of-a-kind axe throwing bar in Fort Lauderdale. Throw axes while enjoying craft cocktails & live music. Food menu available. Plan 1.5-2 hours.',
+                notes: 'Located at 115 NW 6 St, Fort Lauderdale. Call: 954-247-1687. Try the Berry The Hatchett cocktail! Fun competitive date!'
+            }
         },
         {
             id: 'axeholehouse',
@@ -937,7 +1362,13 @@
             price: '$$',
             time: '35 min',
             tags: ['fun'],
-            img: ''
+            img: 'https://cdn.escaperoom.com/uploads/styles/directoryPhotos/The-Axe-Hole-House-Davie-FL-01-zFNhngIKF-lg_1x.jpg',
+            details: {
+                pricing: '$25 per person for 1 hour | $40 per person for 2 hours | Group rates available',
+                hours: 'Mon-Thu: 4 PM - 10 PM | Fri: 4 PM - 12 AM | Sat: 12 PM - 12 AM | Sun: 12 PM - 10 PM',
+                whatToExpect: 'Indoor axe throwing venue in Davie. Private lanes, trained instructors teach proper technique. Walk-ins welcome but reservations recommended. BYOB allowed!',
+                notes: 'Must be 10+ years old. Closed-toe shoes required. Great for competitive couples! Located at 6363 SW 45th St, Davie.'
+            }
         },
         {
             id: 'skyzone',
@@ -946,7 +1377,13 @@
             price: '$$',
             time: '15 min',
             tags: ['fun'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Trampoline_park.jpg/640px-Trampoline_park.jpg'
+            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,q_75,w_1200/v1/crm/elmhurstil/skyzone_8F254269-9FCD-6869-BFDC29A9BDAF24FE-8f2541f7bcf37b8_8f254477-eed9-9925-a7504d638e4925bf.jpg',
+            details: {
+                pricing: '$12 Tuesday special (90 min) | Family deal $64.99 (4 people + pizza) Wed/Sun | Socks required $4.99',
+                hours: 'Mon-Thu: 1-8 PM | Fri: 11 AM-10 PM | Sat: 10 AM-10 PM | Sun: 1-8 PM',
+                whatToExpect: 'South Florida\'s largest trampoline park in Pompano Beach. Trampolines, foam pits, dodgeball. Plan 1.5-2 hours. Active, fun date!',
+                notes: 'Located at 1834 SW 2nd St, Pompano Beach. $12 Tuesday is best deal! Group rates available for 25+ jumpers. Fun workout!'
+            }
         },
         {
             id: 'urbanair',
@@ -955,7 +1392,13 @@
             price: '$$',
             time: '15 min',
             tags: ['fun'],
-            img: ''
+            img: 'https://assets.simpleviewinc.com/simpleview/image/upload/crm/daytonabeach/urban_2F03F055-E9EC-6E36-DAEFF1997B8706DF-2f03efcee67e175_2f03f47d-0321-99b4-3c08142c886d59f8.jpg',
+            details: {
+                pricing: 'Varies by location | Socks required $3.99 | 2-hour play limit during busy times',
+                hours: 'Hours vary by location (Plantation, Kendall, and other FL locations)',
+                whatToExpect: 'More than trampolines! Sky Rider, ropes course, climbing walls, VR, laser tag, bumper cars, go-karts (varies by location). Plan 2 hours. Very active!',
+                notes: 'Multiple FL locations - check urbanair.com for nearest. Group discounts for 10+. Great for active, adventurous couples!'
+            }
         },
         {
             id: 'justthefunny',
@@ -964,7 +1407,13 @@
             price: '$$',
             time: '35 min',
             tags: ['fun'],
-            img: ''
+            img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/f1/43/b1/just-the-funny-theater.jpg?w=1200&h=-1&s=1',
+            details: {
+                pricing: 'Friday Night Live: $25 | DeathMatch Apprentice (Fri 11 PM): $10 | Tickets NON-REFUNDABLE',
+                hours: 'Shows: Thu-Sat starting at 8 PM | Check schedule for specific showtimes',
+                whatToExpect: 'Interactive improv comedy at 3119 Coral Way, Miami. Three stages. Shows based on YOUR suggestions! Plan 2-3 hours including drinks. Hilarious date night!',
+                notes: 'Buy tickets at justthefunny.com or Ticketmaster. Don\'t overpay on resale sites! Great for couples who love to laugh.'
+            }
         },
         {
             id: 'ftlimprov',
@@ -973,7 +1422,13 @@
             price: '$$',
             time: '25 min',
             tags: ['fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Tickets ~$30-69 (varies by performer) | Thursday cheapest ~$30 | Buy ONLY from ImprovFTL.com',
+                hours: 'Show schedule varies - check website | Located in Dania Pointe',
+                whatToExpect: 'Top-name comedians in Dania Beach. Dinner + show packages available. Plan 2-3 hours. Big-name comedy acts!',
+                notes: 'DO NOT buy from third parties - tickets will be denied! Buy at ImprovFTL.com only. Great date night with laughs & food!'
+            }
         },
         {
             id: 'miamiimprov',
@@ -982,7 +1437,13 @@
             price: '$$',
             time: '35 min',
             tags: ['fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Tickets ~$54-104 (varies by performer) | Average $84 | DO NOT buy from third parties',
+                hours: 'Shows: Weekdays 7:30-8 PM | Weekends 7 PM, 9:30 PM, 10 PM | Office: Mon-Fri 9 AM-5 PM',
+                whatToExpect: 'Top comedy acts in Doral (City Place). 375-seat venue. Dinner + show packages. Plan 2-3 hours. Big laughs!',
+                notes: 'Located at 3450 NW 83rd Ave #224, Doral. Call: 305-441-8200. Buy tickets at miamiimprov.com ONLY - third party tickets denied!'
+            }
         },
         {
             id: 'swapshop',
@@ -991,7 +1452,13 @@
             price: '$',
             time: '10 min',
             tags: ['fun'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Drive-in_theater.jpg/640px-Drive-in_theater.jpg'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Drive-in_theater.jpg/640px-Drive-in_theater.jpg',
+            details: {
+                pricing: 'PERMANENTLY CLOSED as of January 2024',
+                hours: 'CLOSED - The iconic Swap Shop Drive-In Theater has permanently closed',
+                whatToExpect: 'Unfortunately, this historic South Florida landmark closed in early 2024 after decades of operation. The 14-screen drive-in theater was part of the larger Swap Shop flea market complex.',
+                notes: 'Consider Fort Lauderdale Beach Drive-In (seasonal) or Dezerland Drive-In as alternatives for the drive-in movie experience.'
+            }
         },
         {
             id: 'happypaws',
@@ -1000,7 +1467,13 @@
             price: '$$',
             time: '10 min',
             tags: ['fun'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Cat_playing_with_a_toy.jpg/640px-Cat_playing_with_a_toy.jpg'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Cat_playing_with_a_toy.jpg/640px-Cat_playing_with_a_toy.jpg',
+            details: {
+                pricing: '60-Minute Kittens Playtime (varies by day) | Under 5: FREE | Complimentary drink included',
+                hours: 'Daily: 11 AM - 7 PM (Mon-Sun) | Call ahead recommended',
+                whatToExpect: 'Interact with purebred kittens including British Shorthairs, Maine Coons, and Scottish Folds. Also an adoption center - take your furry friend home same day!',
+                notes: 'Located at 158 N University Dr, Pembroke Pines. Advance reservations recommended. Call to schedule your visit!'
+            }
         },
         {
             id: 'doggiebag',
@@ -1009,7 +1482,13 @@
             price: '$',
             time: '30 min',
             tags: ['fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Contact for pricing | Venue rentals available for parties & events',
+                hours: 'CLOSED Mon-Tue | Wed-Sat: 10 AM - 5 PM | Sun: 10 AM - 3 PM',
+                whatToExpect: '2,500 sq ft indoor dog park with A/C & agility equipment inside A Doggies Paradise. Dog bakery, custom cakes, catering. Dog Fitness Center with treadmill!',
+                notes: 'Located at 14900 SW 136th St #105, Miami. Call: 305-710-7266. Great for dog birthday parties and playtime dates!'
+            }
         },
         {
             id: 'cafevico',
@@ -1018,7 +1497,13 @@
             price: '$$',
             time: '40 min',
             tags: ['food'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Italian_pasta.jpg/640px-Italian_pasta.jpg'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Italian_pasta.jpg/640px-Italian_pasta.jpg',
+            details: {
+                pricing: 'Lunch: ~$25/person | Dinner: ~$60/person | Happy Hour: 4-7 PM daily',
+                hours: 'Mon-Thu: 4 PM - 10 PM | Fri: 11 AM - 10 PM | Sat-Sun: 4 PM - 10 PM',
+                whatToExpect: 'Authentic Italian since 1996 by Executive Chef Marco Vico. Signature lasagna & veal ossobuco. Live entertainment Fri-Sat from 5 PM. Plan 1.5-2 hours.',
+                notes: 'Located at 1125 N Federal Hwy, Fort Lauderdale. Reservations recommended. Piano bar atmosphere, perfect romantic dinner spot!'
+            }
         },
         {
             id: 'serafina',
@@ -1027,7 +1512,13 @@
             price: '$$$',
             time: '40 min',
             tags: ['food'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Miami Spice: $35 brunch/lunch or $45-60 dinner | Upscale pricing for fine Italian',
+                hours: 'Daily: 12 PM - 10 PM (locations vary) | Happy Hour: Mon-Fri 5-8 PM (Aventura)',
+                whatToExpect: 'Multiple South Florida locations (Aventura Mall, Miami Worldcenter, Fort Lauderdale). Famous truffle pasta & world-famous pizza. Handmade pasta. Plan 1.5-2 hours.',
+                notes: 'Fort Lauderdale waterfront location has weekend brunch with $17 bottomless mimosas/bellinis. Lively atmosphere, imported ingredients. Reservations recommended!'
+            }
         },
         {
             id: 'ilmulino',
@@ -1036,7 +1527,13 @@
             price: '$$$',
             time: '45 min',
             tags: ['food'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Lunch (3-course): $35 | Dinner: $100+ | Sunday Supper (4-course): $56 | Brunch buffet: $115 (bottomless drinks)',
+                hours: 'Breakfast: 7-11 AM | Lunch: 11:30 AM-3:30 PM | Dinner: 4-11 PM | Sunday Brunch: 11:30 AM-3 PM',
+                whatToExpect: 'Fine Italian dining at Acqualina Resort in Sunny Isles Beach. Fall prix fixe menu $58 (Mon-Sat). 3% surcharge on all bills. Upscale romantic atmosphere.',
+                notes: 'Located at Acqualina Resort. Reservations: 305-466-9191. Children\'s brunch: $65. Cash payments avoid 3% fee. Special occasion destination!'
+            }
         },
         {
             id: 'bachour',
@@ -1045,7 +1542,13 @@
             price: '$$',
             time: '35 min',
             tags: ['food'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/French_pastries.jpg/640px-French_pastries.jpg'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/French_pastries.jpg/640px-French_pastries.jpg',
+            details: {
+                pricing: 'Pastries/Desserts: $6-7 | Add proteins to salads: Chicken +$12, Salmon +$18, Steak +$20',
+                hours: 'Mon-Sat: 7 AM - 7 PM | Sun: 7 AM - 5 PM | Happy Hour: Mon-Fri 4-7 PM | Kitchen opens: 8 AM',
+                whatToExpect: 'MICHELIN Bib Gourmand 2025! Chef Antonio Bachour\'s elaborate pastries & all-day café menu in Coral Gables. Bakery + bistro. Plan 1-2 hours.',
+                notes: 'Located at 2020 Salzedo St, Coral Gables. Instagram-worthy desserts! Good quality, good value. Perfect for sweet date or brunch.'
+            }
         },
         {
             id: 'dripndip',
@@ -1054,7 +1557,13 @@
             price: '$$',
             time: '40 min',
             tags: ['food', 'fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Contact for pricing | Menu includes ice cream rolls, crepes, waffles, smoothies',
+                hours: 'Daily: 12 PM - 10 PM (Mon-Sun)',
+                whatToExpect: 'Dubai Chocolate Strawberry Cups, handcrafted ice cream rolls, fluffy pancakes, golden waffles, delicate crêpes. NOT a fondue restaurant - it\'s a dessert café!',
+                notes: 'Located at 1909 Cordova Rd, Fort Lauderdale. Call: 754-259-1512. Perfect sweet date spot with Instagram-worthy desserts!'
+            }
         },
         {
             id: 'lasolasgondola',
@@ -1063,7 +1572,13 @@
             price: '$$$',
             time: '20 min',
             tags: ['fun', 'food'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Gondola_ride.jpg/640px-Gondola_ride.jpg'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Gondola_ride.jpg/640px-Gondola_ride.jpg',
+            details: {
+                pricing: 'Varies by package (typically ~$275) | All rides are PRIVATE',
+                hours: 'Mon-Thu & Sun: 9 AM - 9 PM | Fri-Sat: 9 AM - 10 PM | Daily tours available',
+                whatToExpect: 'Authentic Venetian gondola ride through Fort Lauderdale waterways. Professional gondoliers. BYOB allowed - bring your own beverages, snacks, finger foods!',
+                notes: 'Perfect for proposals, anniversaries, birthdays, romantic date nights! Reservations recommended. Contact for specific pricing & packages.'
+            }
         },
         {
             id: 'nube',
@@ -1072,7 +1587,13 @@
             price: '$$',
             time: '25 min',
             tags: ['food', 'fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Cocktails: $15-20 | $50/person minimum spend | Valet: $10 for 3hrs (with validation)',
+                hours: 'CLOSED Mon | Tue-Fri: 2 PM - 12 AM | Sat-Sun: 11 AM - 12 AM | Happy Hour: Tue-Fri 2-6 PM (bar only)',
+                whatToExpect: '26th floor oceanfront rooftop at Beach House Hilton Resort. Smart casual dress code. 21+ only. Reservations highly recommended.',
+                notes: 'Located at 505 N Fort Lauderdale Beach Blvd Fl26. Call: 954-525-6823. nuberooftop.com. Stunning ocean views!'
+            }
         },
         {
             id: 'rooftop1wlo',
@@ -1081,7 +1602,13 @@
             price: '$$',
             time: '25 min',
             tags: ['food', 'fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Happy Hour: $7-10 cocktails, $8 nibbles | Sunday bottomless brunch (12-4 PM)',
+                hours: 'CLOSED Mon-Tue | Wed-Thu: 4 PM - 1 AM | Fri: 4 PM - 2 AM | Sat: 2 PM - 2 AM | Sun: 12 PM - 10 PM',
+                whatToExpect: '7th floor craft cocktail lounge in downtown Fort Lauderdale. Happy Hour: Wed-Fri 4-7 PM, Sat 2-7 PM, Sun 12-10 PM. Kitchen open till midnight.',
+                notes: 'Located at 1 W Las Olas Blvd #700. Book at exploretock.com/rooftop1wlo. Amazing city views, perfect date spot!'
+            }
         },
         {
             id: 'miamifoodtours',
@@ -1090,7 +1617,13 @@
             price: '$$$',
             time: '35 min',
             tags: ['food', 'fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'South Beach: $69.99 | Wynwood/Design District: $89.99 | Little Havana: $92.56 adults, $67.56 kids 5-12 | Under 5: FREE',
+                hours: 'Public tours daily | Some tours depart 11 AM from Lincoln Road (South Beach) | Duration: 2-3 hours',
+                whatToExpect: 'Culture & food walking tours. All tastings = full meal + 3 drinks (alcohol included, no upcharge). Little Havana, South Beach, Wynwood tours available.',
+                notes: 'Private groups 10-150 available. miamiculinarytours.com. Perfect way to explore Miami neighborhoods while eating amazing food together!'
+            }
         },
         {
             id: 'italiancooking',
@@ -1099,7 +1632,13 @@
             price: '$$$',
             time: '30 min',
             tags: ['food', 'fun', 'art'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Making_pasta.jpg/640px-Making_pasta.jpg'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Making_pasta.jpg/640px-Making_pasta.jpg',
+            details: {
+                pricing: 'Chef Baba (Sat): Contact for pricing | Real Food Academy: $85-105 | Classpop: $99.99-133.99 | Cozymeal: $80-100+',
+                hours: 'Varies by provider | Chef Baba: Sat 2 PM & 6 PM | Real Food: Thu 7-10 PM | Ferraro\'s: Mon-Fri only | Duration: 2-4 hours',
+                whatToExpect: 'Multiple options in Miami/Fort Lauderdale. Learn pasta-making, Italian cuisine. Hands-on cooking, eat what you make. Traveling chefs or host locations available.',
+                notes: 'Chef Baba: 3581 NW 19 St, Lauderdale Lakes | Real Food: 570-A NE 81st St, Miami. Book online in advance. Fun, interactive date!'
+            }
         },
         {
             id: 'peachtree',
@@ -1108,7 +1647,13 @@
             price: '$$',
             time: '40 min',
             tags: ['fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'FREE to browse | Vintage clothing & retail items vary by piece',
+                hours: 'Tue-Sun: 11 AM - 7 PM | CLOSED Monday',
+                whatToExpect: 'Women\'s vintage clothing store and retail boutique in Wynwood/Midtown Miami. Browse unique vintage finds, try on clothes, enjoy the aesthetic vibes.',
+                notes: 'Located at 3440 N Miami Ave, Miami. NOT a restaurant - it\'s a clothing/retail store. Fun for thrifting date & exploring Miami\'s vintage scene!'
+            }
         },
         {
             id: 'animaledventures',
@@ -1117,7 +1662,13 @@
             price: '$$$',
             time: '30 min',
             tags: ['fun'],
-            img: ''
+            img: '',
+            details: {
+                pricing: 'Animal Park: $10-15/person all-day access | Safari tours: ~$25+ with feeding included | Varies by experience',
+                hours: 'Animal Park (Bedner\'s Farm): Sat-Sun 10 AM - 4 PM | Safari: Reservation only',
+                whatToExpect: 'Located in Boynton Beach (Palm Beach County). Petting area, feeding area, exotic area, kangaroo encounters. Safari location has guided walk-through tours.',
+                notes: 'This is in BOYNTON BEACH, not Miami (about 1hr north). Worth the drive for unique animal encounters! Reservations required for safari tours.'
+            }
         },
         {
             id: 'matheson',
@@ -1126,7 +1677,13 @@
             price: '$',
             time: '40 min',
             tags: ['fun'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Beach_sunset.jpg/640px-Beach_sunset.jpg'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Beach_sunset.jpg/640px-Beach_sunset.jpg',
+            details: {
+                pricing: 'Park entry: FREE | Parking: $5 weekdays, $7 weekends/holidays | Boat launch: $13-17',
+                hours: 'Sunrise to sunset daily | Office: 8 AM - 5 PM | Winter: Mon-Fri 9 AM-4:30 PM, Sat-Sun 9 AM-5:30 PM',
+                whatToExpect: 'Unique man-made atoll pool naturally flushed by Biscayne Bay tides. Calm shallow water perfect for swimming. Amazing sunset views! Marina, picnic areas, nature trails.',
+                notes: 'Located at 9610 Old Cutler Rd, south of Coral Gables. Veterans/disabled veterans may get free parking - contact park office. Very romantic spot!'
+            }
         },
         {
             id: 'hollywoodbeach',
@@ -1135,7 +1692,13 @@
             price: '$',
             time: '15 min',
             tags: ['fun'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Hollywood_Beach_Broadwalk.jpg/640px-Hollywood_Beach_Broadwalk.jpg'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Hollywood_Beach_Broadwalk.jpg/640px-Hollywood_Beach_Broadwalk.jpg',
+            details: {
+                pricing: 'Broadwalk: FREE | Metered parking: $1/hr weekdays, $1.50/hr weekends | Garages: $4-5/hr',
+                hours: 'Broadwalk open 24/7 | Parking enforcement active - don\'t run out of time!',
+                whatToExpect: '2.5-mile oceanfront promenade. Walk, bike, rollerblade. Restaurants, shops, cafes. Beach access. Gets busy on weekends! Plan 2-3 hours.',
+                notes: 'Free parking on Hollywood Blvd before bridge (10 min walk). Garages near Margaritaville. Pay with cash, card, or parking app. Perfect for sunset strolls!'
+            }
         }
         ];
 
@@ -1215,7 +1778,9 @@
 
             card.addEventListener('mouseenter', (e) => {
                 const rect = card.getBoundingClientRect();
-                tooltip.style.left = rect.right + 15 + 'px';
+
+                // Simple, reliable positioning: to the right of the card
+                tooltip.style.left = (rect.right + 15) + 'px';
                 tooltip.style.top = rect.top + 'px';
                 tooltip.classList.add('show');
             });
@@ -1249,6 +1814,77 @@
         event.target.classList.add('active');
         renderCards(type);
         }
+
+        // --- RANDOM DATE PICKER ---
+        window.showRandomDate = function() {
+            // Get a random date from the dates array
+            const randomIndex = Math.floor(Math.random() * dates.length);
+            const randomDate = dates[randomIndex];
+
+            // Build the modal content
+            let detailsHTML = '';
+            if (randomDate.details) {
+                detailsHTML = `
+                    <div class="random-date-details">
+                        <div class="random-detail-section">
+                            <div class="random-detail-label">💵 Pricing</div>
+                            <div class="random-detail-content">${randomDate.details.pricing}</div>
+                        </div>
+                        <div class="random-detail-section">
+                            <div class="random-detail-label">🕒 Hours</div>
+                            <div class="random-detail-content">${randomDate.details.hours}</div>
+                        </div>
+                        <div class="random-detail-section">
+                            <div class="random-detail-label">📝 What to Expect</div>
+                            <div class="random-detail-content">${randomDate.details.whatToExpect}</div>
+                        </div>
+                        ${randomDate.details.notes ? `
+                        <div class="random-detail-section">
+                            <div class="random-detail-label">⭐ Good to Know</div>
+                            <div class="random-detail-content">${randomDate.details.notes}</div>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+
+            const tagsHTML = randomDate.tags.map(tag => {
+                const emoji = tag === 'art' ? '🎨' : tag === 'history' ? '🏛️' : tag === 'fun' ? '🎢' : '🌿';
+                return `<span class="random-date-badge">${emoji} ${tag.charAt(0).toUpperCase() + tag.slice(1)}</span>`;
+            }).join('');
+
+            const cardHTML = `
+                <div class="random-date-name">${randomDate.name}</div>
+                <div class="random-date-desc">${randomDate.desc}</div>
+                <div class="random-date-meta">
+                    ${tagsHTML}
+                    <span class="random-date-badge">💰 ${randomDate.price}</span>
+                    <span class="random-date-badge">🚗 ${randomDate.time}</span>
+                </div>
+                ${detailsHTML}
+            `;
+
+            document.getElementById('randomDateCard').innerHTML = cardHTML;
+            document.getElementById('randomModal').classList.add('show');
+        }
+
+        window.closeRandomModal = function() {
+            document.getElementById('randomModal').classList.remove('show');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('randomModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeRandomModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeRandomModal();
+            }
+        });
 
         const dropzones = document.querySelectorAll('.dropzone');
         dropzones.forEach(zone => {
