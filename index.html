@@ -215,6 +215,53 @@
     position: relative;
     overflow: hidden;
   }
+
+  .completed-badge {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: linear-gradient(135deg, var(--accent-green), #00c853);
+    color: #000;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    box-shadow: 0 2px 8px rgba(0, 230, 118, 0.4);
+  }
+
+  .completed-checkbox {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 5;
+    opacity: 0.7;
+    transition: all 0.2s;
+  }
+
+  .completed-checkbox:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  .completed-checkbox:checked {
+    opacity: 1;
+  }
+
+  .card.completed {
+    opacity: 0.6;
+    border: 2px solid var(--accent-green);
+  }
+
+  .card.completed .card-img {
+    filter: grayscale(50%);
+  }
   
   .card-img {
     width: 100%;
@@ -567,6 +614,313 @@
     border-color: var(--accent);
   }
 
+  /* --- SAVE/LOAD CONTROLS --- */
+  .save-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .save-btn {
+    background: var(--accent-green);
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(0, 230, 118, 0.3);
+  }
+
+  .save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 230, 118, 0.5);
+  }
+
+  .load-btn {
+    background: var(--accent-blue);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(68, 138, 255, 0.3);
+  }
+
+  .load-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(68, 138, 255, 0.5);
+  }
+
+  .clear-btn {
+    background: #666;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+  }
+
+  .clear-btn:hover {
+    background: #888;
+    transform: translateY(-2px);
+  }
+
+  .save-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, var(--accent-green), #00c853);
+    color: #000;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0, 230, 118, 0.4);
+    z-index: 30000;
+    animation: slideInRight 0.3s ease, slideOutRight 0.3s ease 2.7s;
+    opacity: 0;
+  }
+
+  .save-notification.show {
+    opacity: 1;
+  }
+
+  @keyframes slideInRight {
+    from {
+      transform: translateX(400px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOutRight {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(400px);
+      opacity: 0;
+    }
+  }
+
+  /* --- MOBILE RESPONSIVE STYLES --- */
+  @media (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 0.8rem;
+      margin-bottom: 15px;
+    }
+
+    .save-controls {
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .save-btn, .load-btn, .clear-btn {
+      padding: 8px 15px;
+      font-size: 0.75rem;
+    }
+
+    .filter-bar {
+      gap: 6px;
+      margin-bottom: 15px;
+    }
+
+    .filter-btn {
+      padding: 6px 12px;
+      font-size: 0.75rem;
+    }
+
+    .random-btn {
+      padding: 8px 15px;
+      font-size: 0.8rem;
+      width: 100%;
+    }
+
+    .tier-container {
+      gap: 3px;
+    }
+
+    .tier-row {
+      min-height: 120px;
+      flex-direction: column;
+    }
+
+    .tier-label {
+      width: 100%;
+      height: 40px;
+      font-size: 1.2rem;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .dropzone {
+      padding: 10px;
+      min-height: 80px;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .pool-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .card {
+      width: 100%;
+      min-width: unset;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .card.dragging {
+      opacity: 0.5;
+    }
+
+    .card-img-container {
+      height: 90px;
+    }
+
+    .card-title {
+      font-size: 0.85rem;
+    }
+
+    .card-desc {
+      font-size: 0.7rem;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+    }
+
+    .card-price {
+      font-size: 0.75rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      padding: 2px 5px;
+    }
+
+    .drive-badge {
+      font-size: 0.65rem;
+      padding: 2px 5px;
+    }
+
+    .completed-checkbox {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* Tooltip adjustments for mobile - make them tap-based */
+    .card-tooltip {
+      position: fixed;
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      max-width: 90vw;
+      min-width: unset;
+      width: 90vw;
+      max-height: 80vh;
+      overflow-y: auto;
+      z-index: 25000;
+    }
+
+    .card-tooltip.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) translateY(0) !important;
+    }
+
+    /* Add backdrop for mobile tooltips */
+    .tooltip-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 24999;
+    }
+
+    .tooltip-backdrop.show {
+      display: block;
+    }
+
+    /* Random modal adjustments */
+    .random-modal-content {
+      padding: 25px;
+      width: 95%;
+      max-width: unset;
+    }
+
+    .random-modal-title {
+      font-size: 1.3rem;
+    }
+
+    .random-date-name {
+      font-size: 1.4rem;
+    }
+
+    .random-modal-actions {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .random-action-btn {
+      width: 100%;
+    }
+
+    /* Save notification */
+    .save-notification {
+      top: 10px;
+      right: 10px;
+      left: 10px;
+      text-align: center;
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOutRight {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -574,12 +928,23 @@
   <h1>🌴 South Florida Date Ranker</h1>
   <p class="subtitle">Drag & Drop to rank. Drive times estimated from <strong>North Perry Airport (HWO)</strong>.</p>
 
+  <div class="save-controls">
+    <button class="save-btn" onclick="saveRankings()">💾 Save My Rankings</button>
+    <button class="load-btn" onclick="loadRankings()">📂 Load Saved Rankings</button>
+    <button class="clear-btn" onclick="clearRankings()">🗑️ Clear All</button>
+  </div>
+
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterCards('all')">All Dates</button>
-    <button class="filter-btn" onclick="filterCards('art')">🎨 Art & Cute</button>
-    <button class="filter-btn" onclick="filterCards('history')">🏛️ History</button>
-    <button class="filter-btn" onclick="filterCards('fun')">🎢 Fun & Silly</button>
-    <button class="filter-btn" onclick="filterCards('food')">🌿 Healthy Eats</button>
+    <button class="filter-btn" onclick="filterCards('art')">🎨 Art</button>
+    <button class="filter-btn" onclick="filterCards('nature')">🌳 Nature</button>
+    <button class="filter-btn" onclick="filterCards('active')">🎢 Active</button>
+    <button class="filter-btn" onclick="filterCards('food')">🍽️ Food</button>
+    <button class="filter-btn" onclick="filterCards('animals')">🐾 Animals</button>
+    <button class="filter-btn" onclick="filterCards('entertainment')">🎭 Entertainment</button>
+    <button class="filter-btn" onclick="filterCards('romantic')">💑 Romantic</button>
+    <button class="filter-btn" onclick="filterCards('unique')">🎉 Unique</button>
+    <button class="filter-btn" onclick="sortByPrice()">💰 Sort by Price</button>
     <button class="random-btn" onclick="showRandomDate()">🎲 Feeling Spontaneous?</button>
   </div>
 
@@ -595,6 +960,12 @@
     <h3 class="pool-title">👇 Unranked Dates 👇</h3>
     <div class="dropzone pool-grid" id="pool"></div>
   </div>
+
+  <!-- Save Notification -->
+  <div class="save-notification" id="saveNotification"></div>
+
+  <!-- Tooltip Backdrop for Mobile -->
+  <div class="tooltip-backdrop" id="tooltipBackdrop"></div>
 
   <!-- Random Date Modal -->
   <div class="random-modal" id="randomModal">
@@ -656,7 +1027,7 @@
             desc: 'Stunning Italian estate on the water. Romantic gardens, history, and incredible photo ops.',
             price: '$$',
             time: '45 min',
-            tags: ['history', 'art'],
+            tags: ['art', 'history', 'nature', 'romantic'],
             img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Villa_Vizcaya_20110228.jpg',
             details: {
                 pricing: 'Adults: $25 | Students: $15 | Kids 6-12: $10 | Under 6: FREE',
@@ -671,7 +1042,7 @@
             desc: 'Peaceful Japanese gardens & museum. Very zen, quiet walking paths, and bonsai displays.',
             price: '$$',
             time: '50 min',
-            tags: ['history', 'art'],
+            tags: ['nature', 'history', 'romantic'],
             img: 'https://upload.wikimedia.org/wikipedia/commons/3/36/MorikamiLakeHouse.jpg',
             details: {
                 pricing: 'Adults: $20 | Students/Military: $18 | Kids 6-17: $12 | Under 6: FREE',
@@ -686,7 +1057,7 @@
             desc: 'Mysterious stone structures built by one man for his lost love. Quirky and historical.',
             price: '$$',
             time: '55 min',
-            tags: ['history', 'fun'],
+            tags: ['history', 'unique', 'romantic'],
             img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Coral_Castle_1.jpg/1200px-Coral_Castle_1.jpg',
             details: {
                 pricing: 'Adults: $18 | Seniors 62+: $15 | Kids 7-12: $8 | Under 7: FREE',
@@ -701,7 +1072,7 @@
             desc: 'Walk through tropical greenhouses with thousands of butterflies flying around you.',
             price: '$$',
             time: '35 min',
-            tags: ['art', 'fun'],
+            tags: ['animals', 'nature'],
             img: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Morpho_peleides_at_Butterfly_World.jpg',
             details: {
                 pricing: 'Adults: $32.95 | Seniors 55+: $27.95 | Kids 3-11: $24.95 | Under 3: FREE',
@@ -716,7 +1087,7 @@
             desc: 'Retro museum where you can play! Dozens of vintage pinball machines on free play.',
             price: '$',
             time: '50 min',
-            tags: ['fun', 'history'],
+            tags: ['active', 'entertainment', 'unique'],
             img: 'https://silverballmuseum.com/delray-beach/wp-content/uploads/sites/5/2021/11/silverballmsr03449-2537.jpg',
             details: {
                 pricing: 'Flat rate: $20/person for UNLIMITED play on all machines',
@@ -731,7 +1102,7 @@
             desc: 'Massive covered market (Sat/Sun). Walk around eating healthy treats. High energy.',
             price: '$',
             time: '15 min',
-            tags: ['food', 'fun'],
+            tags: ['food', 'shopping'],
             img: 'https://voyagemia.com/wp-content/uploads/2017/10/personal_photo-238-1000x600.jpg',
             details: {
                 pricing: 'FREE entry | Food $5-15 per item',
@@ -746,7 +1117,7 @@
             desc: 'Farm-to-table dining inside a winery. Famous for Avocado Stuffed Burgers (Steak or Veg).',
             price: '$$$',
             time: '60 min',
-            tags: ['food', 'fun'],
+            tags: ['food', 'romantic'],
             img: 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fit,w_1440,h_900/crm/miamifl/RedLander-Restaurant-at-Schnebly-Winery-2-1440x9000-9381b7685056a36_9381b86e-5056-a36a-0b1c37f45551f690.jpg',
             details: {
                 pricing: 'Entrees $18-38 | Wine flights $15-20 | Full bottles $25-60',
@@ -761,7 +1132,7 @@
             desc: 'Immersive art. Clouds, mirrors, and digital water. Super cool and interactive.',
             price: '$$$',
             time: '30 min',
-            tags: ['art', 'fun'],
+            tags: ['art', 'unique'],
             img: 'https://cdn.prod.website-files.com/650ba1c41a78874c2e6faac3%2F66eaa4262cbacf5117c1fda5_bg%20video-poster-00001.jpg',
             details: {
                 pricing: 'Adults: $39+ | Students/Seniors: $35+ | Kids 4-12: $25+ (varies by exhibition)',
@@ -776,7 +1147,7 @@
             desc: 'Rent paddle boats, walk the 2-mile loop, or picnic. Cheap, active, and local.',
             price: '$',
             time: '12 min',
-            tags: ['fun', 'food'],
+            tags: ['nature', 'active'],
             img: 'https://static.where-e.com/United_States/Florida_State/Broward_County/Ty-Topeekeegee-Yugnee-Park_fc6c4dedfbc5b1407b8ac47c38f930e2.jpg',
             details: {
                 pricing: 'FREE park entry | Paddle boats $15/30min | Bike rentals $10/hr',
@@ -791,7 +1162,7 @@
             desc: 'Grab a coffee and play with adoptable kittens in a thrift store. Very wholesome.',
             price: '$',
             time: '30 min',
-            tags: ['art', 'fun'],
+            tags: ['animals', 'unique', 'food'],
             img: 'https://fortlauderdalemagazine.com/wp-content/uploads/2018/05/0618_Community_1.jpg',
             details: {
                 pricing: 'Cat lounge: $15/person (includes drink) | Thrift shop: FREE',
@@ -806,7 +1177,7 @@
             desc: '1920s artist estate with wild monkeys in the trees. Old Florida vibes.',
             price: '$$',
             time: '35 min',
-            tags: ['history', 'art'],
+            tags: ['history', 'art', 'nature'],
             img: 'https://www.bonnethouse.org/wp-content/uploads/2017/02/BH-main2.jpg',
             details: {
                 pricing: 'Adults: $25 | Seniors 65+: $23 | Students/Youth 6-18: $20 | Under 6: FREE',
@@ -821,7 +1192,7 @@
             desc: 'Digital art museum in Dania. Interactive lights and projection mapping. Like Superblue but closer.',
             price: '$$',
             time: '20 min',
-            tags: ['art', 'fun'],
+            tags: ['art', 'unique'],
             img: 'https://media.timeout.com/images/106088136/image.jpg',
             details: {
                 pricing: 'General admission: $29-35 | Students: $25 | Kids under 12: $20',
@@ -836,7 +1207,7 @@
             desc: 'Planetarium and Aquarium. Go for "Laser Fridays" for a music laser show.',
             price: '$$$',
             time: '35 min',
-            tags: ['fun', 'history'],
+            tags: ['educational', 'animals', 'entertainment'],
             img: 'https://www.frostscience.org/wp-content/uploads/2023/08/Oculus-ps-9-scaled.jpg',
             details: {
                 pricing: 'Adults: $32 | Seniors/Students: $28 | Kids 3-11: $23 | Under 3: FREE | Laser shows extra $10',
@@ -851,7 +1222,7 @@
             desc: 'Legendary fruit stand with a petting zoo. Amazing smoothies and rare fruits.',
             price: '$',
             time: '60 min',
-            tags: ['food', 'fun'],
+            tags: ['food', 'animals', 'unique'],
             img: 'https://cdn.shopify.com/s/files/1/1687/7223/files/Store-Front_10-1024x680_grande.jpg?v=1483305153',
             details: {
                 pricing: 'FREE entry | Smoothies $8-12 | Fruit varies | Petting zoo FREE',
@@ -866,7 +1237,7 @@
             desc: '(Seasonal Nov-Apr) Famous cinnamon rolls. Long lines but worth it.',
             price: '$',
             time: '55 min',
-            tags: ['food', 'fun'],
+            tags: ['food', 'unique'],
             img: 'https://offloadmedia.feverup.com/secretmiami.com/wp-content/uploads/2025/08/22123606/Copy-of-Dicover-Photo-Collage-Miami-edited-12-1024x683.jpg',
             details: {
                 pricing: 'Cinnamon rolls $13/6-pack | Strawberry shakes $8 | Produce varies',
@@ -881,7 +1252,7 @@
             desc: 'Historic 1920s swimming pool made from a coral rock quarry. Beautiful waterfalls.',
             price: '$$',
             time: '40 min',
-            tags: ['history', 'fun'],
+            tags: ['history', 'active', 'unique'],
             img: 'https://www.coralgables.com/sites/default/files/styles/internal_banner_mobile/public/2022-04/venetian-pool7.jpg?itok=SDCqKeed',
             details: {
                 pricing: 'CLOSED for renovations until late summer 2025 | When open: Residents $6.50 | Non-residents $15-21 (seasonal)',
@@ -896,7 +1267,7 @@
             desc: 'Drive-through safari. Giraffes and rhinos walk right by your car. Super fun day trip.',
             price: '$$$',
             time: '65 min',
-            tags: ['fun'],
+            tags: ['animals', 'nature'],
             img: 'https://assets.simpleviewinc.com/simpleview/image/upload/crm/visitflorida/50239_ykt0ct8138xlxs66kk384vjq1vgt4r2u_965181ae-5056-a36a-0bcf1b8120f6041f.jpg',
             details: {
                 pricing: 'Ages 10+: $54.99 | Kids 3-9: Lower rate | Includes drive-through safari + Safari World park',
@@ -911,7 +1282,7 @@
             desc: 'High-tech mini golf. Not your average windmill course. Good food and drinks too.',
             price: '$$',
             time: '30-60 min',
-            tags: ['fun'],
+            tags: ['active', 'entertainment'],
             img: 'https://platform.miami.eater.com/wp-content/uploads/sites/12/chorus/uploads/chorus_asset/file/24133408/IMG_0648.JPG?quality=90&strip=all&crop=16.654761904762,0,66.690476190476,100',
             details: {
                 pricing: '~$16 per player for 9-hole course | Food & drinks available',
@@ -926,7 +1297,7 @@
             desc: 'Rent kayaks and paddle through mangrove tunnels. Active and beautiful nature.',
             price: '$',
             time: '25 min',
-            tags: ['fun', 'food'],
+            tags: ['nature', 'active'],
             img: 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fit,w_1440,h_900/crm/miamifl/110491_5406_576b7d01-5056-a36a-0bd06519340e8a63.jpg',
             details: {
                 pricing: 'Park entry: $6 per vehicle | Kayak/SUP rentals: ~$20-30/hour via Oleta River Outdoor Center',
@@ -941,7 +1312,7 @@
             desc: 'Hidden historic village. Finger sandwiches and tea in a cute cottage. Very romantic.',
             price: '$$',
             time: '55 min',
-            tags: ['history', 'food'],
+            tags: ['food', 'romantic', 'unique'],
             img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/4c/a2/0c/the-wicker-room.jpg?w=900&h=500&s=1',
             details: {
                 pricing: 'Royal Tea: $33 | High Tea: $30 | Afternoon Tea: $27 | Nursery Tea: $15 | 24+ loose leaf teas',
@@ -956,7 +1327,7 @@
             desc: 'Watch movies projected on a massive wall while sitting on the grass. Usually free!',
             price: '$',
             time: '40 min',
-            tags: ['art', 'fun'],
+            tags: ['entertainment', 'romantic'],
             img: 'https://www.miamibeachfl.gov/wp-content/uploads/2024/02/Parks-Gallery-1-MiamiBeachSoundstage.jpeg',
             details: {
                 pricing: 'FREE! No tickets needed',
@@ -1211,7 +1582,7 @@
             desc: 'Secret bar inside Xtreme Action Park. Requires weekly code to enter. Escape room vibes!',
             price: '$$',
             time: '15 min',
-            tags: ['fun'],
+            tags: ['unique', 'romantic', 'food'],
             img: '',
             details: {
                 pricing: 'Cocktails: $18 | No cover charge',
@@ -1226,7 +1597,7 @@
             desc: '1920s Prohibition-era speakeasy at Hyatt Centric. Red velvet, vintage vibes, live music.',
             price: '$$',
             time: '20 min',
-            tags: ['fun'],
+            tags: ['unique', 'romantic', 'food'],
             img: '',
             details: {
                 pricing: '$50-60 per person minimum (food & beverage)',
@@ -1241,7 +1612,7 @@
             desc: 'Downtown Fort Lauderdale hideaway with live jazz and burlesque shows. Super sexy vibes.',
             price: '$$',
             time: '25 min',
-            tags: ['fun', 'art'],
+            tags: ['unique', 'romantic', 'entertainment'],
             img: '',
             details: {
                 pricing: 'Cocktails ~$15 | No cover charge',
@@ -1256,7 +1627,7 @@
             desc: 'Simulate skydiving indoors! Feel the rush without jumping out of a plane.',
             price: '$$$',
             time: '45 min',
-            tags: ['fun'],
+            tags: ['active', 'unique'],
             img: 'https://cdn.tripster.com/media/product/gallery/original/iFLY_Fort_Lauderdale_(37419).jpg',
             details: {
                 pricing: 'Call for pricing: 954-280-4359 | Packages include 2 or 4 flights (60 seconds each)',
@@ -1271,7 +1642,7 @@
             desc: 'Retro arcade games + craft cocktails. Pac-Man and drinks = perfect date night!',
             price: '$$',
             time: '30 min',
-            tags: ['fun'],
+            tags: ['entertainment', 'food'],
             img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGGKrTiQ8Hsj0WAAqnX4DNtfW7pmHZL5Ny5g&s',
             details: {
                 pricing: 'Game Pass: $7 (or FREE with drink purchase) | All arcade games FREE PLAY with wristband',
@@ -1286,7 +1657,7 @@
             desc: 'Board game cafe with 1000+ games. Friendly staff help you pick the perfect game!',
             price: '$',
             time: '25 min',
-            tags: ['fun'],
+            tags: ['entertainment', 'food'],
             img: '',
             details: {
                 pricing: 'FREE admission | ALL 4,000+ video games FREE | Happy Hour (Mon/Wed/Thu/Fri 5-7 PM): $2 off drinks',
@@ -1733,8 +2104,14 @@
         // Use fallback immediately if no image URL provided
         const imgSrc = data.img || getFallbackImage(data.tags[0]);
 
+        // Check if this date is marked as completed
+        const completedDates = JSON.parse(localStorage.getItem('completedDates') || '[]');
+        const isCompleted = completedDates.includes(data.id);
+
         card.innerHTML = `
             <div class="card-img-container">
+            <input type="checkbox" class="completed-checkbox" data-id="${data.id}" ${isCompleted ? 'checked' : ''} title="Mark as completed">
+            ${isCompleted ? '<div class="completed-badge">✓ Done</div>' : ''}
             <img src="${imgSrc}" class="card-img" alt="${data.name}" loading="lazy" onerror="this.onerror=null; this.src=getFallbackImage('${data.tags[0]}');">
             <div class="drive-badge">🚗 <span class="${driveClass}">${data.time}</span></div>
             </div>
@@ -1747,6 +2124,10 @@
             <div class="card-tags">${tagsHtml}</div>
             </div>
         `;
+
+        if (isCompleted) {
+            card.classList.add('completed');
+        }
 
         card.addEventListener('dragstart', () => { card.classList.add('dragging'); });
         card.addEventListener('dragend', () => { card.classList.remove('dragging'); });
@@ -1776,19 +2157,66 @@
             `;
             document.body.appendChild(tooltip);
 
+            // Desktop: hover tooltips
             card.addEventListener('mouseenter', (e) => {
-                const rect = card.getBoundingClientRect();
-
-                // Simple, reliable positioning: to the right of the card
-                tooltip.style.left = (rect.right + 15) + 'px';
-                tooltip.style.top = rect.top + 'px';
-                tooltip.classList.add('show');
+                if (window.innerWidth > 768) {
+                    const rect = card.getBoundingClientRect();
+                    tooltip.style.left = (rect.right + 15) + 'px';
+                    tooltip.style.top = rect.top + 'px';
+                    tooltip.classList.add('show');
+                }
             });
 
             card.addEventListener('mouseleave', () => {
-                tooltip.classList.remove('show');
+                if (window.innerWidth > 768) {
+                    tooltip.classList.remove('show');
+                }
+            });
+
+            // Mobile: tap to show tooltip
+            let tapTimeout;
+            card.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    // Don't trigger if clicking checkbox
+                    if (e.target.classList.contains('completed-checkbox')) {
+                        return;
+                    }
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Close any other open tooltips
+                    document.querySelectorAll('.card-tooltip.show').forEach(t => {
+                        if (t !== tooltip) t.classList.remove('show');
+                    });
+
+                    // Clear inline styles set by desktop version to let mobile CSS take over
+                    tooltip.style.left = '';
+                    tooltip.style.top = '';
+                    tooltip.style.transform = '';
+
+                    tooltip.classList.toggle('show');
+                    const backdrop = document.getElementById('tooltipBackdrop');
+                    backdrop.classList.toggle('show');
+                }
             });
         }
+
+        // Close mobile tooltip when backdrop is tapped
+        const backdrop = document.getElementById('tooltipBackdrop');
+        if (backdrop) {
+            backdrop.addEventListener('click', () => {
+                document.querySelectorAll('.card-tooltip.show').forEach(t => t.classList.remove('show'));
+                backdrop.classList.remove('show');
+            });
+        }
+
+        // Add checkbox event listener
+        const checkbox = card.querySelector('.completed-checkbox');
+        checkbox.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleCompleted(data.id, card, checkbox);
+        });
 
         return card;
         }
@@ -1886,6 +2314,136 @@
             }
         });
 
+        // --- PRICE SORTING ---
+        window.sortByPrice = function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Sort dates by price ($ to $$$)
+            const priceOrder = { '$': 1, '$$': 2, '$$$': 3 };
+            const sortedDates = [...dates].sort((a, b) => priceOrder[a.price] - priceOrder[b.price]);
+
+            const pool = document.getElementById('pool');
+            pool.innerHTML = '';
+            sortedDates.forEach(d => {
+                pool.appendChild(createCard(d));
+            });
+        }
+
+        // --- COMPLETED DATES FUNCTIONALITY ---
+        function toggleCompleted(dateId, card, checkbox) {
+            let completedDates = JSON.parse(localStorage.getItem('completedDates') || '[]');
+
+            if (checkbox.checked) {
+                if (!completedDates.includes(dateId)) {
+                    completedDates.push(dateId);
+                }
+                card.classList.add('completed');
+
+                // Add the "Done" badge
+                const imgContainer = card.querySelector('.card-img-container');
+                if (!imgContainer.querySelector('.completed-badge')) {
+                    const badge = document.createElement('div');
+                    badge.className = 'completed-badge';
+                    badge.innerHTML = '✓ Done';
+                    imgContainer.insertBefore(badge, imgContainer.firstChild);
+                }
+            } else {
+                completedDates = completedDates.filter(id => id !== dateId);
+                card.classList.remove('completed');
+
+                // Remove the "Done" badge
+                const badge = card.querySelector('.completed-badge');
+                if (badge) {
+                    badge.remove();
+                }
+            }
+
+            localStorage.setItem('completedDates', JSON.stringify(completedDates));
+        }
+
+        // --- SAVE/LOAD RANKINGS FUNCTIONALITY ---
+        window.saveRankings = function() {
+            const rankings = {
+                's-tier': Array.from(document.getElementById('s-tier').children).map(c => c.id),
+                'a-tier': Array.from(document.getElementById('a-tier').children).map(c => c.id),
+                'b-tier': Array.from(document.getElementById('b-tier').children).map(c => c.id),
+                'c-tier': Array.from(document.getElementById('c-tier').children).map(c => c.id),
+                'd-tier': Array.from(document.getElementById('d-tier').children).map(c => c.id),
+                'pool': Array.from(document.getElementById('pool').children).map(c => c.id)
+            };
+
+            localStorage.setItem('dateRankings', JSON.stringify(rankings));
+            showNotification('💾 Rankings saved successfully!');
+        }
+
+        window.loadRankings = function() {
+            const savedRankings = localStorage.getItem('dateRankings');
+
+            if (!savedRankings) {
+                showNotification('⚠️ No saved rankings found!');
+                return;
+            }
+
+            const rankings = JSON.parse(savedRankings);
+
+            // Clear all zones
+            ['s-tier', 'a-tier', 'b-tier', 'c-tier', 'd-tier', 'pool'].forEach(zoneId => {
+                document.getElementById(zoneId).innerHTML = '';
+            });
+
+            // Restore cards to their saved positions
+            Object.keys(rankings).forEach(zoneId => {
+                const zone = document.getElementById(zoneId);
+                rankings[zoneId].forEach(dateId => {
+                    const dateData = dates.find(d => d.id === dateId);
+                    if (dateData) {
+                        zone.appendChild(createCard(dateData));
+                    }
+                });
+            });
+
+            showNotification('📂 Rankings loaded successfully!');
+        }
+
+        window.clearRankings = function() {
+            if (confirm('Are you sure you want to clear all saved data? This will reset your rankings and completed dates.')) {
+                localStorage.removeItem('dateRankings');
+                localStorage.removeItem('completedDates');
+
+                // Reset to initial state
+                ['s-tier', 'a-tier', 'b-tier', 'c-tier', 'd-tier'].forEach(zoneId => {
+                    document.getElementById(zoneId).innerHTML = '';
+                });
+
+                const pool = document.getElementById('pool');
+                pool.innerHTML = '';
+                dates.forEach(d => {
+                    pool.appendChild(createCard(d));
+                });
+
+                showNotification('🗑️ All data cleared!');
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('saveNotification');
+            notification.textContent = message;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Auto-load saved rankings on page load
+        window.addEventListener('load', () => {
+            const savedRankings = localStorage.getItem('dateRankings');
+            if (savedRankings) {
+                loadRankings();
+            }
+        });
+
         const dropzones = document.querySelectorAll('.dropzone');
         dropzones.forEach(zone => {
         zone.addEventListener('dragover', e => {
@@ -1925,6 +2483,87 @@
             }
         }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
+
+        // --- MOBILE TOUCH DRAG AND DROP ---
+        let draggedElement = null;
+        let touchStartY = 0;
+        let touchStartX = 0;
+        let isDragging = false;
+        let dragTimeout = null;
+
+        document.addEventListener('touchstart', (e) => {
+            const card = e.target.closest('.card');
+            if (!card) return;
+
+            // Don't interfere with checkbox
+            if (e.target.classList.contains('completed-checkbox')) return;
+
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+
+            // Set a timeout to distinguish between tap and drag
+            dragTimeout = setTimeout(() => {
+                isDragging = true;
+                draggedElement = card;
+                card.classList.add('dragging');
+
+                // Provide haptic feedback if available
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+            }, 200); // 200ms delay before drag starts
+        }, { passive: false });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging || !draggedElement) return;
+
+            e.preventDefault(); // Prevent scrolling while dragging
+
+            const touch = e.touches[0];
+            const currentX = touch.clientX;
+            const currentY = touch.clientY;
+
+            // Find which dropzone we're over
+            const elementBelow = document.elementFromPoint(currentX, currentY);
+            const dropzone = elementBelow?.closest('.dropzone');
+
+            if (dropzone && draggedElement) {
+                const afterElement = getDragAfterElement(dropzone, currentY);
+                if (afterElement == null) {
+                    dropzone.appendChild(draggedElement);
+                } else {
+                    dropzone.insertBefore(draggedElement, afterElement);
+                }
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchend', (e) => {
+            clearTimeout(dragTimeout);
+
+            if (isDragging && draggedElement) {
+                draggedElement.classList.remove('dragging');
+
+                // Provide haptic feedback if available
+                if (navigator.vibrate) {
+                    navigator.vibrate(30);
+                }
+            }
+
+            draggedElement = null;
+            isDragging = false;
+        });
+
+        document.addEventListener('touchcancel', (e) => {
+            clearTimeout(dragTimeout);
+
+            if (draggedElement) {
+                draggedElement.classList.remove('dragging');
+            }
+
+            draggedElement = null;
+            isDragging = false;
+        });
+
     });
   </script>
 </body>
