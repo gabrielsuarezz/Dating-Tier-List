@@ -380,6 +380,103 @@
   .card-tooltip.show {
     opacity: 1;
     transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Quick Rating Buttons */
+  .quick-rating {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #444;
+  }
+
+  .quick-rating-label {
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .rating-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .rating-btn {
+    padding: 8px 16px;
+    border: 2px solid;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    background: rgba(0, 0, 0, 0.3);
+    min-width: 50px;
+    text-align: center;
+  }
+
+  .rating-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .rating-btn:active {
+    transform: translateY(0);
+  }
+
+  .rating-btn.s-tier {
+    border-color: #ff4757;
+    color: #ff4757;
+  }
+
+  .rating-btn.s-tier:hover {
+    background: #ff4757;
+    color: #000;
+  }
+
+  .rating-btn.a-tier {
+    border-color: #ffa502;
+    color: #ffa502;
+  }
+
+  .rating-btn.a-tier:hover {
+    background: #ffa502;
+    color: #000;
+  }
+
+  .rating-btn.b-tier {
+    border-color: #fffa65;
+    color: #fffa65;
+  }
+
+  .rating-btn.b-tier:hover {
+    background: #fffa65;
+    color: #000;
+  }
+
+  .rating-btn.c-tier {
+    border-color: #7bed9f;
+    color: #7bed9f;
+  }
+
+  .rating-btn.c-tier:hover {
+    background: #7bed9f;
+    color: #000;
+  }
+
+  .rating-btn.d-tier {
+    border-color: #70a1ff;
+    color: #70a1ff;
+  }
+
+  .rating-btn.d-tier:hover {
+    background: #70a1ff;
+    color: #000;
   }
 
   .tooltip-title {
@@ -2154,8 +2251,27 @@
                     <div class="tooltip-label">⭐ Good to Know</div>
                     <div class="tooltip-content">${data.details.notes}</div>
                 </div>` : ''}
+                <div class="quick-rating">
+                    <div class="quick-rating-label">⚡ Quick Rank</div>
+                    <div class="rating-buttons">
+                        <button class="rating-btn s-tier" data-tier="s-tier">S</button>
+                        <button class="rating-btn a-tier" data-tier="a-tier">A</button>
+                        <button class="rating-btn b-tier" data-tier="b-tier">B</button>
+                        <button class="rating-btn c-tier" data-tier="c-tier">C</button>
+                        <button class="rating-btn d-tier" data-tier="d-tier">D</button>
+                    </div>
+                </div>
             `;
             document.body.appendChild(tooltip);
+
+            // Add click handlers to rating buttons
+            tooltip.querySelectorAll('.rating-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const tier = btn.getAttribute('data-tier');
+                    quickRankCard(card, tier, tooltip);
+                });
+            });
 
             // Desktop: hover tooltips
             card.addEventListener('mouseenter', (e) => {
@@ -2241,6 +2357,41 @@
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         event.target.classList.add('active');
         renderCards(type);
+        }
+
+        // --- QUICK RANK FUNCTIONALITY ---
+        function quickRankCard(card, tierId, tooltip) {
+            const targetZone = document.getElementById(tierId);
+
+            if (!targetZone) return;
+
+            // Move the card to the selected tier
+            targetZone.appendChild(card);
+
+            // Close the tooltip
+            tooltip.classList.remove('show');
+
+            // Close mobile backdrop if open
+            const backdrop = document.getElementById('tooltipBackdrop');
+            if (backdrop) {
+                backdrop.classList.remove('show');
+            }
+
+            // Show success notification
+            const tierNames = {
+                's-tier': 'S-Tier',
+                'a-tier': 'A-Tier',
+                'b-tier': 'B-Tier',
+                'c-tier': 'C-Tier',
+                'd-tier': 'D-Tier'
+            };
+
+            showNotification(`✨ Ranked to ${tierNames[tierId]}!`);
+
+            // Provide haptic feedback on mobile
+            if (navigator.vibrate) {
+                navigator.vibrate(30);
+            }
         }
 
         // --- RANDOM DATE PICKER ---
