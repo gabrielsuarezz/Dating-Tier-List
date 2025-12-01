@@ -2259,9 +2259,12 @@
                 });
             });
 
-            // Desktop: hover tooltips
+            // Desktop: hover tooltips with delay to allow clicking
+            let hideTimeout;
+
             card.addEventListener('mouseenter', (e) => {
                 if (window.innerWidth > 768) {
+                    clearTimeout(hideTimeout);
                     requestAnimationFrame(() => {
                         const rect = card.getBoundingClientRect();
                         tooltip.style.left = (rect.right + 15) + 'px';
@@ -2273,7 +2276,24 @@
 
             card.addEventListener('mouseleave', () => {
                 if (window.innerWidth > 768) {
-                    tooltip.classList.remove('show');
+                    hideTimeout = setTimeout(() => {
+                        tooltip.classList.remove('show');
+                    }, 300);
+                }
+            });
+
+            // Keep tooltip visible when hovering over it
+            tooltip.addEventListener('mouseenter', () => {
+                if (window.innerWidth > 768) {
+                    clearTimeout(hideTimeout);
+                }
+            });
+
+            tooltip.addEventListener('mouseleave', () => {
+                if (window.innerWidth > 768) {
+                    hideTimeout = setTimeout(() => {
+                        tooltip.classList.remove('show');
+                    }, 300);
                 }
             });
 
