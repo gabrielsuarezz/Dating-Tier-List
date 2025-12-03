@@ -168,3 +168,6 @@ If you run into issues:
 ---
 
 **Remember:** The system is designed to be forgiving! Even if an image breaks later, the fallback system will handle it gracefully.
+
+##Tesing comments and commits
+
